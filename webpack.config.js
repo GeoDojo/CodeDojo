@@ -38,10 +38,10 @@ module.exports = {
     publicPath: '/dist/',
     proxy: {
       '/': 'http://localhost:3000',
-      // '/socket.io': {
-      //   target: 'http://localhost:3000',
-      //   ws: true
-      // }
+      '/socket.io': {
+        target: 'http://localhost:3000',
+        ws: true
+      }
       // '/user/*': 'http://localhost:3000',
       // '/': 'http://localhost:3000',
       // '/': 'http://localhost:3000',

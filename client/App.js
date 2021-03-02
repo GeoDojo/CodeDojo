@@ -1,17 +1,17 @@
 import React, { useContext, createContext, useEffect } from 'react';
-//const socket = io();
+import { io } from "socket.io-client";
+const socket = io();
 
 const App = () => {
 
 const checkSocket = () => {
-   // socket.emit('test', 'This is the first socket test')
+   socket.emit('test', 'This is the first socket test')
 }
 
     return (
         <div>
-            hi from App.js
-            <button onClick={() => {console.log('click')}}>send</button>
-        </div>
+            <button onClick={checkSocket}>click</button>
+        </div>  
     )
 }
 

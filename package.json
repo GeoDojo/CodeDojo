@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "NODE_ENV=production nodemon server/server.js",
     "build": "cross-env NODE_ENV=production webpack",
-    "dev-mac": "cross-env NODE_ENV=development webpack serve --open --hot & nodemon server/server.js", 
+    "dev-mac": "cross-env NODE_ENV=development webpack serve --open --hot & nodemon server/server.js",
     "dev-windows": "concurrently \"cross-env NODE_ENV=development webpack serve --open\" \"nodemon server/server.js\""
   },
   "repository": {
@@ -42,6 +42,7 @@
     "sass": "^1.32.8",
     "sass-loader": "^11.0.1",
     "socket.io": "^3.1.2",
+    "socket.io-client": "^3.1.2",
     "style-loader": "^2.0.0",
     "supertest": "^6.1.3",
     "webpack": "^5.24.2",
