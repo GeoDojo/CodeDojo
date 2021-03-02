@@ -8,7 +8,7 @@
     "start": "NODE_ENV=production nodemon server/server.js",
     "build": "cross-env NODE_ENV=production webpack",
     "dev-mac": "cross-env NODE_ENV=development webpack serve --open --hot & nodemon server/server.js",
-    "dev-windows": "concurrently \"cross-env NODE_ENV=development webpack serve --open\" \"nodemon server/server.js\""
+    "dev": "concurrently \"cross-env NODE_ENV=development webpack serve --open\" \"nodemon server/server.js\""
   },
   "repository": {
     "type": "git",
