@@ -5,7 +5,7 @@ const cookieParser = require('cookie-parser');
 // server integrated with websocket
 const app = express();
 const server = require('http').createServer(app);
-const io = require("socket.io")(server);
+const io = require('socket.io')(server);
 
 const PORT = 3000;
 
@@ -16,14 +16,14 @@ app.use(express.json());
 app.use(cookieParser());
 
 // flow check
-app.use((req, res, next) => {
-  console.log(`
-  👾👾👾 FLOW METHOD 👾👾👾
-  URL: ${req.url}\n
-  COOKIE: ${req.cookies}\n
-  METHOD: ${req.method}\n`);
-  return next();
-});
+// app.use((req, res, next) => {
+//   console.log(`
+//   👾👾👾 FLOW METHOD 👾👾👾
+//   URL: ${req.url}\n
+//   COOKIE: ${req.cookies}\n
+//   METHOD: ${req.method}\n`);
+//   return next();
+// });
 
 
 // route handlers
@@ -34,7 +34,7 @@ app.use('/dist', express.static(path.resolve(__dirname, '../dist')));
 app.use('/assets', express.static(path.resolve(__dirname, '../client/assets')));
 
 // to serve react router the static files
-app.get('/*', (req, res) => {
+app.get('/', (req, res) => {
   return res.status(200).sendFile(path.join(__dirname, '../client/index.html'));
 });
 
@@ -56,25 +56,25 @@ app.use((err, req, res, next) => {
   return res.status(errorObj.status).send(errorObj.message);
 });
 
- 
+
 server.listen(PORT, () => {
-//app.listen(PORT, () => {
- console.log(`Server is listening to 🚀 ${PORT}... 🚀`);
+  //app.listen(PORT, () => {
+  console.log(`Server is listening to 🚀 ${PORT}... 🚀`);
 });
 
 
 io.on('connection', (socket) => {
-    //this is when a user lands on our site
-    console.log('a user connected')
+  //this is when a user lands on our site
+  console.log('a user connected: ', socket.id)
 
-    socket.on('test', (arg) => {
-      console.log(arg)
-    })
+  socket.on('test', (arg) => {
+    console.log(arg)
+  })
 
-    //Each socket also fires a special disconnect event:
-    socket.on('disconnect', () => {
-        console.log('a user disconnect');
-    })
+  //Each socket also fires a special disconnect event:
+  socket.on('disconnect', () => {
+    console.log('a user disconnect');
+  })
 })
 
 //module.exports = app;

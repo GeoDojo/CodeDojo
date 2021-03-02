@@ -5,7 +5,7 @@ const socket = io();
 const App = () => {
 
 const checkSocket = () => {
-   socket.emit('test', 'This is the first socket test')
+   socket.emit('test', `This is the first socket test from ${socket.id}`)
 }
 
     return (
