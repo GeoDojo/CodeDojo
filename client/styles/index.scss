@@ -82,3 +82,13 @@ body {
   border-bottom-left-radius: 0.5rem;
   overflow: hidden;
 }
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-width: 25%;
+  margin: 15px;
+  margin-top: 10rem;
+}
