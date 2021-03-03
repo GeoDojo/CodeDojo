@@ -1,133 +1,99 @@
-export const PromptInitalState = {
-    prompt: '',
-    showPrompt: false,
+export const initialAppState = {
+    prompt: ' dummy prompt ',
+    function:  'dummy function',
+    console: 'dummy console',
+    winner: 'dummy winner',
+    completedAlgos: {},
+    totalRows: 0,
+    test_cases: [],
+    username: '',
+    userFxn: '',
+    time: '',
+    // endGame: FALSE,
+    // algoID: '',
+    // algoName: '',
+    // algoStart: FALSE,
+    // algoPrompt: '',
 };
 
-export const PromptReducer = (state, action) => {
+//from react hook, return hook which is a general state and general dispatch (is reducer)
+export const appReducer = (state, action) => {
     switch (action.type) {
-      case 'UPDATE_PROMPT':
-        return {
-          ...state,
-          prompt: action.payload.prompt,
-        };
-      case 'SHOW_PROMPT':
-        return {
-          ...state,
-          showPrompt: true,
-        };
-  };
-}
-
-export const QuestionState = {
-    question: '',
-    showQuestion: false,
-};
-
-export const QuestionReducer = (state, action) => {
+        case 'UPDATE_PROMPT':
+      return {
+        ...state,
+        prompt: action.payload.prompt,
+      };
+    }
     switch (action.type) {
-      case 'UPDATE_QUESTION':
-        return {
-          ...state,
-          question: action.payload.question,
-        };
-      case 'SHOW_QUESTION':
-        return {
-          ...state,
-          showQuestion: true,
-        };
-  };
-}
-
-export const ConsoleState = {
-    console: '',
-    showConsole: false,
-};
-
-export const ConsoleReducer = (state, action) => {
+        case 'UPDATE_FUNCTION':
+      return {
+        ...state,
+        function: action.payload.function,
+      };
+    }
     switch (action.type) {
-      case 'UPDATE_CONSOLE':
-        return {
-          ...state,
-          console: action.payload.console,
-        };
-      case 'SHOW_CONSOLE':
-        return {
-          ...state,
-          showConsole: true,
-        };
-  };
-}
-
-export const winnerState = {
-    winner: false
-};
-
-export const winnerReducer = (state, action) => {
-  switch (action.type) {
-      case 'UPDATE_WINNER':
-        return {
-          ...state,
-          winner: action.payload.winner,
+        case 'UPDATE_CONSOLE':
+      return {
+        ...state,
+        console: action.payload.console,
+      };
     }
-  }
-}
-
-export const hostState = {
-    host: false
-};
-
-export const hostReducer = (state, action) => {
-  switch (action.type) {
-      case 'UPDATE_HOST':
-        return {
-          ...state,
-          host: action.payload.host,
+    switch (action.type) {
+        case 'UPDATE_WINNER':
+      return {
+        ...state,
+        winner: action.payload.winner,
+      };
     }
-  }
-}
-
-export const hostState = {
-    host: false
-};
-
-export const hostReducer = (state, action) => {
-  switch (action.type) {
-      case 'UPDATE_HOST':
-        return {
-          ...state,
-          host: action.payload.host,
+    switch (action.type) {
+        case 'UPDATE_COMPLETEDALGOS':
+      return {
+        ...state,
+        completedAlgos: action.payload.completedAlgos,
+      };
     }
-  }
-}
-
-export const startGameState = {
-    startGame: false
-};
-
-export const startGameReducer = (state, action) => {
-  switch (action.type) {
-      case 'UPDATE_STARTGAME':
-        return {
-          ...state,
-          startGame: action.payload.startGame,
+    switch (action.type) {
+        case 'UPDATE_TOTALROWS':
+      return {
+        ...state,
+        completedAlgos: action.payload.totalRows,
+      };
     }
-  }
-}
-
-export const endGameState = {
-    endGame: false
-};
-
-export const endGameReducer = (state, action) => {
-  switch (action.type) {
-      case 'UPDATE_ENDGAME':
-        return {
-          ...state,
-          endGame: action.payload.endGame,
+    switch (action.type) {
+        case 'UPDATE_TESTCASES':
+      return {
+        ...state,
+        testCases: action.payload.testCases,
+      };
     }
-  }
+    switch (action.type) {
+        case 'UPDATE_USERNAME':
+      return {
+        ...state,
+        username: action.payload.userName,
+      };
+    }
+    switch (action.type) {
+        case 'UPDATE_TIME':
+      return {
+        ...state,
+        time: action.payload.time,
+      };
+    }
+    switch (action.type) {
+        case 'UPDATE_EndGame':
+      return {
+        ...state,
+        time: action.payload.time,
+      };
+    }
 }
 
-// export const CompletedAlgosInitialState = (state, action) => {
-//     switch (action.type)
-// }
+// completedAlgos: {},
+//     totalRows: 0,
+//     test_cases: [],
+//     username: '',
+//     userFxn: '',
+//     time: '',
+//     endGame: FALSE,

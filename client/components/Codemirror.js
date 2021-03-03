@@ -1,44 +1,58 @@
 import React from 'react';
 import { UnControlled as CodeMirror } from 'react-codemirror2';
+import 'codemirror/lib/codemirror.css';
+import 'codemirror/theme/material.css';
+import 'codemirror/mode/xml/xml';
 import 'codemirror/mode/javascript/javascript';
-
-import '../../node_modules/codemirror/lib/codemirror.css';
-import '../../node_modules/codemirror/theme/dracula.css';
+import 'codemirror/mode/css/css';
 
 // import context object
 // import { PromptContext } from '../state/contexts';
 // import { QuestionContext } from '../state/contexts';
 // import { ConsoleContext } from '../state/contexts';
 
-function CodeBox({id}) {
+function CodeBox({ codeBoxName, codeBoxValue,id }) {
+  //   const { codeState } = useContext(CodeContext);
 
-  // const { PromptState } = useContext(PromptContext);
-  // const { QuestionState } = useContext(QuestionContext);
-  // const { ConsoleState } = useContext(ConsoleContext);
+  //   let code;
+  //   codeState.showSchema
+  //     ? (code = codeState.schema)
+  //     : (code = codeState.resolver);
 
-  // let code;
-  // if (PromptState.showPrompt) {code = PromptState.Prompt}
-  // if (QuestionState.showQuestion) {code = QuestionState.Question}
-  // if (ConsoleState.showConsole) {code = ConsoleState.Console}
+  function handleChange(editor, data, value) {
+    console.log(value);
+    // userInput = value;
+  }
+
+  // let userInput = ""
 
   return (
-    <div id={id}>
-      <CodeMirror className='codebox'
-       value='<h1>I ♥ react-codemirror2</h1>'
-       options={{
-        mode: 'javascript',
-        lineWrapping: true,
-        theme: 'dracula',
-        lineNumbers: true,
-        cursorScrollMargin: 48,
-        indentUnit: 2,
-        tabSize: 2,
-        styleActiveLine: true,
-        smartIndent: true,
-       }}
-       />
+    <div>
+      <div className='codebox-title'>{codeBoxName}</div>
+      <div className='codebox'>
+        <CodeMirror
+          onChange={handleChange}
+          className='code-mirror-container'
+          value={codeBoxValue}
+          options={{
+            lineWrapping: true,
+            // theme: 'dracula',
+            lineNumbers: true,
+            cursorScrollMargin: 48,
+            indentUnit: 2,
+            tabSize: 2,
+            styleActiveLine: true,
+            smartIndent: true,
+            lineWrapping: true,
+            lint: true,
+            mode: 'javascript',
+            theme: 'material',
+            lineNumbers: true,
+          }}
+        />
+      </div>
     </div>
-  )
+  );
 }
 
 export default CodeBox;
