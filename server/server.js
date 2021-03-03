@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 // server integrated with websocket
 const app = express();
 const server = require('http').createServer(app);
+const server = require('http').createServer(app);
 const io = require("socket.io")(server);
 
 const PORT = 3000;
