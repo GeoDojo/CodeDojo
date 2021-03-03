@@ -27,23 +27,26 @@ body {
 }
 
 .codebox {
-  width: 600px;
-  height: 60px;
-  margin-top: 20px;
-  background: blue;
+  // width: 600px;
+  // height: 60px;
+  // margin-top: 20px;
+  // background: blue;
   color: white;
   text-align: center;
   text-decoration: none;
-  border-radius: 7px;
+  // border-radius: 7px;
+  border: 1px solid white;
 }
 
 .top-panel {
-  background-color: hsl(225, 6%, 25%);
+  background-color: hsl(225, 100%, 87%);
 }
 
 .panel {
-  height: 50vh;
+  // height: 50vh;
   display: flex;
+  flex-direction: rows;
+  flex-wrap: wrap;
 }
 
 .code-mirror-container {
