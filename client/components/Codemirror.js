@@ -22,28 +22,31 @@ function CodeBox({ codeBoxName }) {
   }
 
   return (
-    <div className='codebox'>
-      <CodeMirror
-        onChange={handleChange}
-        className='code-mirror-container'
-        value={codeBoxName}
-        options={{
-          // mode: 'javascript',
-          // lineWrapping: true,
-          // theme: 'dracula',
-          lineNumbers: true,
-          cursorScrollMargin: 48,
-          indentUnit: 2,
-          tabSize: 2,
-          styleActiveLine: true,
-          smartIndent: true,
-          lineWrapping: true,
-          lint: true,
-          mode: 'javascript',
-          theme: 'material',
-          lineNumbers: true,
-        }}
-      />
+    <div>
+      <div className='codebox-title'>{codeBoxName}</div>
+      <div className='codebox'>
+        <CodeMirror
+          onChange={handleChange}
+          className='code-mirror-container'
+          value={codeBoxName}
+          options={{
+            // mode: 'javascript',
+            lineWrapping: true,
+            // theme: 'dracula',
+            lineNumbers: true,
+            // cursorScrollMargin: 48,
+            indentUnit: 2,
+            tabSize: 2,
+            styleActiveLine: true,
+            smartIndent: true,
+            lineWrapping: true,
+            lint: true,
+            mode: 'javascript',
+            theme: 'material',
+            lineNumbers: true,
+          }}
+        />
+      </div>
     </div>
   );
 }
