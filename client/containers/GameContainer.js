@@ -4,7 +4,7 @@ import SubmitButton from '../components/Button';
 
 const GameContainer = () => {
   return (
-    <div className='top-panel panel'>
+    <div className='panel'>
       <CodeBox codeBoxName={'Prompt'} />
       <CodeBox codeBoxName={'Function'} />
       <CodeBox codeBoxName={'Console'} />

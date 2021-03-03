@@ -30,11 +30,10 @@ function CodeBox({ codeBoxName }) {
           className='code-mirror-container'
           value={codeBoxName}
           options={{
-            // mode: 'javascript',
             lineWrapping: true,
             // theme: 'dracula',
             lineNumbers: true,
-            // cursorScrollMargin: 48,
+            cursorScrollMargin: 48,
             indentUnit: 2,
             tabSize: 2,
             styleActiveLine: true,
