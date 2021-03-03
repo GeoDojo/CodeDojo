@@ -1,10 +1,12 @@
 import React from 'react';
 
-function LoginBotton ({ siteName, genericClick }){
+function LoginButton ({ siteName, genericClick, id }){
 
     return(
-        <div>:
-            <button onClick={genericClick}>{siteName}</button>
+        <div>
+            <button onClick={genericClick} id={id} className='generic-button'>{siteName}</button>
         </div>
     )
 }
+
+export default LoginButton;

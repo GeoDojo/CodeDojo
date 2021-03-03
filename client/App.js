@@ -1,5 +1,8 @@
 import React, { useContext, createContext, useEffect } from 'react';
 import { io } from "socket.io-client";
+import LoginContainer from "./containers/LoginContainer"
+import WaitingRoomContainer from "./containers/WaitingRoomContainer"
+import GameContainer from "./containers/GameContainer"
 const socket = io();
 
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
@@ -14,15 +17,17 @@ const checkSocket = () => {
     return (
         // <div>
         //     <button onClick={checkSocket}>click</button>
-        // </div>  
+        // </div> 
+
         <Router>
             <Switch>
+                <Route path='/waitingroom' component={WaitingRoomContainer} />
+                {/* <Route exact path='/gameContainer' component={GameContainer} /> */}
                 <Route exact path='/' component={LoginContainer}/>
-                <Route exact path='/waitingRoom' component={WaitingRoomContainer} />
-                <Route exact path='/gameContainer' component={GameContainer} />
             </Switch>
         </Router>
 
+        
     )
 }
 
