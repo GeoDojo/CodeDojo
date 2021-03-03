@@ -11,31 +11,30 @@ const io = require('socket.io')(server);
 const PORT = 3000;
 
 // require the routes
-
+const gameRouter = require('./routes/gameRouter');
+const userRouter = require('./routes/userRouter');
 
 app.use(express.json());
-app.use(cookieParser());
-
-// flow check
-// app.use((req, res, next) => {
-//   console.log(`
-//   👾👾👾 FLOW METHOD 👾👾👾
-//   URL: ${req.url}\n
-//   COOKIE: ${req.cookies}\n
-//   METHOD: ${req.method}\n`);
-//   return next();
-// });
+//app.use(cookieParser());
 
 
 // route handlers
+// app.get('/game/start', (req, res) => {
+//   console.log('hi im here');
+//   return res.status(200).send({
+//     message: 'hi'
+//   })
+// })
 
+app.use('/game', gameRouter);
+app.use('/user', userRouter);
 
 // handles static files for dev server
 app.use('/dist', express.static(path.resolve(__dirname, '../dist')));
 app.use('/assets', express.static(path.resolve(__dirname, '../client/assets')));
 
 // to serve react router the static files
-app.get('/', (req, res) => {
+app.get('/*', (req, res) => {
   return res.status(200).sendFile(path.join(__dirname, '../client/index.html'));
 });
 
@@ -48,7 +47,7 @@ app.use('*', (req, res, next) => {
 app.use((err, req, res, next) => {
   const defaultErr = {
     log: 'Express error handler caught unknown middleware error',
-    status: 400,
+    status: 500,
     message: { err: 'Interal Server Error' },
   };
 
