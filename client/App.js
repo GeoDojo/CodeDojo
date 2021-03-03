@@ -8,7 +8,7 @@ import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 const App = () => {
 
 const checkSocket = () => {
-   socket.emit('test', 'This is the first socket test')
+   socket.emit('test', `This is the first socket test from ${socket.id}`)
 }
 
     return (
