@@ -10,24 +10,23 @@ const GameContainer = () => {
 
   return (
     <div className='panel'>
-      {/* <CodeBox codeBoxName={'Prompt'} codeBoxValue={appState.prompt}/> */}
       <CodeBox codeBoxName={'Prompt'} codeBoxValue={appState.prompt}/>
       <CodeBox codeBoxName={'Function'} codeBoxValue={appState.function}/>
-      <CodeBox codeBoxName={'Test Cases'} codeBoxValue={appState.test_cases}/> 
-      <p>{appState.totalRows}</p>
+      <CodeBox codeBoxName={'Submission Result'} codeBoxValue={appState.submissionTestStatus}/> 
+      {/* <p>{appState.totalRows}</p> */}
       <SubmitButton
         genericClick = { () => {
-            // fetch(`/game/start`, {
-            //     method: 'POST',
-            //     headers: {
-            //       'Content-Type': 'Application/JSON',
-            //     }
-            //     // , body: JSON.stringify({
-            //     // 
-            //     // }),
-            //   })
-            //     .then((data) => data.json())
-            //     .then((data) => {
+            fetch(`/game/start`, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'Application/JSON',
+                }
+                // , body: JSON.stringify({
+                // 
+                // }),
+              })
+                .then((data) => data.json())
+                .then((data) => {
 
                     appDispatch({
                         type: 'UPDATE_PROMPT',
@@ -36,19 +35,19 @@ const GameContainer = () => {
 
                     appDispatch({
                         type: 'UPDATE_FUNCTION',
-                        payload: { function: "function state updated",}
+                        payload: { function: "function state updated", }
                     })  
 
                     appDispatch({
-                            type: 'UPDATE_TEST_CASES',
-                            payload: { test_cases: "test cases state updated", }
+                            type: 'UPDATE_SUBMISSIONTESTSTATUS',
+                            payload: { submissionTestStatus: "true", }
                         })
 
-                    appDispatch({
-                        type: 'UPDATE_TOTALROWS',
-                        payload: { totalRows: "3", }
-                    })
-            //         }) 
+                    // appDispatch({
+                    //     type: 'UPDATE_TOTALROWS',
+                    //     payload: { totalRows: "3", }
+                    // })
+                }) 
         }}
         siteName={'Submit'}
         id='SubmitBtnGameContainer'

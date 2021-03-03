@@ -4,8 +4,8 @@ export const initialAppState = {
     winner: 'dummy winner',
     completedAlgos: {},
     totalRows: 0,
-    test_cases: ["dummy test case 1", "dummy test case 2"],
-    username: '',
+    submissionTestStatus: "dummy false",
+    currentPlayers: {},
     userFxn: '',
     time: '',
     endGame: "",
@@ -53,17 +53,17 @@ export const appReducer = (state, action) => {
       };
     }
     switch (action.type) {
-        case 'UPDATE_TEST_CASES':
+        case 'UPDATE_SUBMISSIONTESTSTATUS':
       return {
         ...state,
-        test_cases: action.payload.test_cases,
+        submissionTestStatus: action.payload.submissionTestStatus,
       };
     }
     switch (action.type) {
         case 'UPDATE_USERNAME':
       return {
         ...state,
-        username: action.payload.userName,
+        currentPlayers: action.payload.currentPlayers,
       };
     }
     switch (action.type) {
