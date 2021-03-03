@@ -6,25 +6,11 @@ import 'codemirror/mode/xml/xml';
 import 'codemirror/mode/javascript/javascript';
 import 'codemirror/mode/css/css';
 
-// import context object
-// import { PromptContext } from '../state/contexts';
-// import { QuestionContext } from '../state/contexts';
-// import { ConsoleContext } from '../state/contexts';
-
 function CodeBox({ codeBoxName, codeBoxValue,id }) {
-  //   const { codeState } = useContext(CodeContext);
-
-  //   let code;
-  //   codeState.showSchema
-  //     ? (code = codeState.schema)
-  //     : (code = codeState.resolver);
 
   function handleChange(editor, data, value) {
     console.log(value);
-    // userInput = value;
   }
-
-  // let userInput = ""
 
   return (
     <div>
@@ -36,7 +22,6 @@ function CodeBox({ codeBoxName, codeBoxValue,id }) {
           value={codeBoxValue}
           options={{
             lineWrapping: true,
-            // theme: 'dracula',
             lineNumbers: true,
             cursorScrollMargin: 48,
             indentUnit: 2,

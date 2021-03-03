@@ -1,15 +1,14 @@
 export const initialAppState = {
-    prompt: ' dummy prompt ',
+    prompt: 'dummy prompt',
     function:  'dummy function',
-    console: 'dummy console',
     winner: 'dummy winner',
     completedAlgos: {},
     totalRows: 0,
-    test_cases: [],
+    test_cases: ["dummy test case 1", "dummy test case 2"],
     username: '',
     userFxn: '',
     time: '',
-    // endGame: FALSE,
+    endGame: "",
     // algoID: '',
     // algoName: '',
     // algoStart: FALSE,
@@ -30,13 +29,6 @@ export const appReducer = (state, action) => {
       return {
         ...state,
         function: action.payload.function,
-      };
-    }
-    switch (action.type) {
-        case 'UPDATE_CONSOLE':
-      return {
-        ...state,
-        console: action.payload.console,
       };
     }
     switch (action.type) {
@@ -61,10 +53,10 @@ export const appReducer = (state, action) => {
       };
     }
     switch (action.type) {
-        case 'UPDATE_TESTCASES':
+        case 'UPDATE_TEST_CASES':
       return {
         ...state,
-        testCases: action.payload.testCases,
+        test_cases: action.payload.test_cases,
       };
     }
     switch (action.type) {
@@ -85,15 +77,8 @@ export const appReducer = (state, action) => {
         case 'UPDATE_EndGame':
       return {
         ...state,
-        time: action.payload.time,
+        endGame: action.payload.endGame,
       };
     }
 }
 
-// completedAlgos: {},
-//     totalRows: 0,
-//     test_cases: [],
-//     username: '',
-//     userFxn: '',
-//     time: '',
-//     endGame: FALSE,
