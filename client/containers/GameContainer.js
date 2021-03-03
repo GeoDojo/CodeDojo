@@ -1,6 +1,7 @@
 import React, { useContext, createContext, useEffect, useReducer, Provider } from 'react';
 import CodeBox from '../components/Codemirror';
 import SubmitButton from '../components/Button';
+import TotalRowsButton from '../components/Button';
 import { AppContext } from '../state/context';
 
 const GameContainer = () => {
@@ -12,7 +13,8 @@ const GameContainer = () => {
       {/* <CodeBox codeBoxName={'Prompt'} codeBoxValue={appState.prompt}/> */}
       <CodeBox codeBoxName={'Prompt'} codeBoxValue={appState.prompt}/>
       <CodeBox codeBoxName={'Function'} codeBoxValue={appState.function}/>
-      <CodeBox codeBoxName={'Test Cases'} codeBoxValue={appState.test_cases}/> //
+      <CodeBox codeBoxName={'Test Cases'} codeBoxValue={appState.test_cases}/> 
+      <p>{appState.totalRows}</p>
       <SubmitButton
         genericClick = { () => {
             // fetch(`/game/start`, {
@@ -29,7 +31,7 @@ const GameContainer = () => {
 
                     appDispatch({
                         type: 'UPDATE_PROMPT',
-                        payload: { prompt: "prompt state updated", }//data.prompt
+                        payload: { prompt: "prompt state updated", } //data.prompt
                     })
 
                     appDispatch({
@@ -37,11 +39,16 @@ const GameContainer = () => {
                         payload: { function: "function state updated",}
                     })  
 
-                appDispatch({
-                        type: 'UPDATE_TEST_CASES',
-                        payload: { test_cases: "test cases state updated", }
+                    appDispatch({
+                            type: 'UPDATE_TEST_CASES',
+                            payload: { test_cases: "test cases state updated", }
+                        })
+
+                    appDispatch({
+                        type: 'UPDATE_TOTALROWS',
+                        payload: { totalRows: "3", }
                     })
-        //         }) 
+            //         }) 
         }}
         siteName={'Submit'}
         id='SubmitBtnGameContainer'

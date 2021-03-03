@@ -49,7 +49,7 @@ export const appReducer = (state, action) => {
         case 'UPDATE_TOTALROWS':
       return {
         ...state,
-        completedAlgos: action.payload.totalRows,
+        totalRows: action.payload.totalRows,
       };
     }
     switch (action.type) {
