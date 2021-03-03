@@ -27,13 +27,21 @@ body {
   border: 10px solid orange;
 }
 
-// .codebox {
-//   width: 100px;
-//   height: 60px;
-//   margin-top: 20px;
-//   background: blue;
-//   color: white;
-//   text-align: center;
-//   text-decoration: none;
-//   border-radius: 7px;
-// }
+
+
+//create gameroom scss file
+#SubmitBtn {
+  border: 10px solid orange;
+}
+
+#PromptCodeBox{
+  border: 10px solid rgb(0, 238, 255);
+}
+
+#QuestionCodeBox{
+  border: 10px solid rgb(255, 38, 0);
+}
+
+#ConsoleCodeBox{
+  border: 10px solid rgb(0, 38, 255);
+}

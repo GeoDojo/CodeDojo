@@ -21,8 +21,8 @@ const checkSocket = () => {
 
         <Router>
             <Switch>
+                 <Route path='/gameroom' component={GameContainer} />
                 <Route path='/waitingroom' component={WaitingRoomContainer} />
-                {/* <Route exact path='/gameContainer' component={GameContainer} /> */}
                 <Route exact path='/' component={LoginContainer}/>
             </Switch>
         </Router>
