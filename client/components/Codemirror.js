@@ -14,11 +14,9 @@ function CodeBox({ codeBoxName }) {
 //     : (code = codeState.resolver);
 
   return (
-    <div>
-      <CodeMirror className='codemirror'
-       value={`/*
-       *** function will be displayed here ***
-       */`}
+    <div className='codebox'>
+      <CodeMirror 
+       value={codeBoxName}
        options={{
         mode: 'javascript',
         lineWrapping: true,
