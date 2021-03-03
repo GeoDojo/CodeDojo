@@ -1,17 +1,39 @@
 body {
-  background: peachpuff;
+  background: ghostwhite;
 }
 
 .generic-button {
-  width: 100px;
-  height: 60px;
-  margin-top: 20px;
-  font-size: 3rem;
-  background: blue;
-  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #444;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 5px -1px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  vertical-align: middle;
+  // max-width: 100px;
+  width: 10rem;
+  padding: 5px;
   text-align: center;
-  text-decoration: none;
-  border-radius: 7px;
+  transition: box-shadow 1.5s;
+  margin-bottom: 10px;
+  background: #ece9e6; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #ffffff,
+    #ece9e6
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #ffffff,
+    #ece9e6
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  position: sticky;
+  top: 0;
+}
+
+.generic-button:hover {
+  box-shadow: 0 8px 6px -6px black;
 }
 
 #GoogleBtn {
@@ -38,6 +60,7 @@ body {
   padding: 0.5rem 0.5rem 0.5rem 1rem;
   border-top-right-radius: 0.5rem;
   border-top-left-radius: 0.5rem;
+  border: 0.5px solid white;
 }
 
 .codebox {
@@ -49,7 +72,7 @@ body {
   // text-align: center;
   text-decoration: none;
   // border-radius: 7px;
-  border: 1px solid white;
+  border: 0.5px solid white;
 }
 
 .panel {
