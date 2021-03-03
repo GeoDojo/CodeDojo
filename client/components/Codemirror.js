@@ -28,15 +28,20 @@ function CodeBox({ codeBoxName }) {
         className='code-mirror-container'
         value={codeBoxName}
         options={{
-          mode: 'javascript',
+          // mode: 'javascript',
+          // lineWrapping: true,
+          // theme: 'dracula',
+          // lineNumbers: true,
+          // cursorScrollMargin: 48,
+          // indentUnit: 2,
+          // tabSize: 2,
+          // styleActiveLine: true,
+          // smartIndent: true,
           lineWrapping: true,
-          theme: 'dracula',
+          lint: true,
+          mode: 'javascript',
+          theme: 'material',
           lineNumbers: true,
-          cursorScrollMargin: 48,
-          indentUnit: 2,
-          tabSize: 2,
-          styleActiveLine: true,
-          smartIndent: true,
         }}
       />
     </div>
