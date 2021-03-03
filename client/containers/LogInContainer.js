@@ -1,23 +1,24 @@
 import React from 'react'
-import Button from '../components/Bu'
+import LoginButton from '../components/Button'
 
 const LogInContainer = () => {
-    //using OAuth instructions
-    const googleLogin = () => {
-        console.log("logged In")
-    }
+
+    //to-do: using OAuth instructions
+        // const googleLogin = () => {
+        //     console.log("logged In")
+        // }
 
     //to-dos: for facebook, github
-
     //to-dos: anonymous
+    //to-dos: reRoute to waitingRoom (this might be in the App.js)
     
     return (
         <div>
             {/* Reusing the Button.js component and passing genericClick to  */}
-            <Button id="Google" genericClick={ googleLogin }/>
-            <Button id="Facebook" genericClick={"FACEBOOK Login"}/>
-            <Button id="Github" genericClick={"GITHUB Login"}/>
-            <Button id="Anonymous" genericClick={"ANON Login"}/>
+            <LoginButton id="GoogleBtn" siteName={'Google'} genericClick={ "googleLogin" }/>
+            <LoginButton id="FacebookBtn" siteName= {'Facebook'} genericClick={"FACEBOOK Login"}/>
+            <LoginButton id="GithubBtn" siteName={'GitHub'} genericClick={"GITHUB Login"}/>
+            <LoginButton id="AnonymousBtn" siteName= {'Anonymous'}genericClick={"ANON Login"}/>
         </div>
     )
 }

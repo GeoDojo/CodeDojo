@@ -3,8 +3,9 @@ body {
 }
 
 .generic-button {
+  width: 100px;
+  height: 60px;
   margin-top: 20px;
-  padding: 24px;
   font-size: 3rem;
   background: blue;
   color: white;
@@ -12,3 +13,27 @@ body {
   text-decoration: none;
   border-radius: 7px;
 }
+
+#GoogleBtn {
+  border: 10px solid green;
+}
+
+
+#AnonymousBtn {
+  border: 10px solid red;
+}
+
+#StartBtnWaitingRoom{
+  border: 10px solid orange;
+}
+
+// .codebox {
+//   width: 100px;
+//   height: 60px;
+//   margin-top: 20px;
+//   background: blue;
+//   color: white;
+//   text-align: center;
+//   text-decoration: none;
+//   border-radius: 7px;
+// }
