@@ -1,9 +1,13 @@
-import React, { useContext, createContext, useEffect } from 'react';
+import React, { useContext, createContext, useEffect, useReducer, Provider } from 'react';
 import { io } from 'socket.io-client';
 import LoginContainer from './containers/LoginContainer';
 import WaitingRoomContainer from './containers/WaitingRoomContainer';
 import GameContainer from './containers/GameContainer';
 const socket = io();
+
+
+import { AppContext } from './state/context';
+import { initialAppState, appReducer} from './state/reducers';
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
@@ -12,10 +16,19 @@ const App = () => {
     socket.emit('test', `This is the first socket test from ${socket.id}`);
   };
 
+  const [ appState, appDispatch] = useReducer(appReducer, initialAppState);
+
   return (
-    // <div>
+
+    <AppContext.Provider 
+      value={{
+          appState, 
+        appDispatch
+    }}>
+
+    {/* // <div>
     //     <button onClick={checkSocket}>click</button>
-    // </div>
+    // </div> */}
 
     <Router>
       <Switch>
@@ -24,6 +37,8 @@ const App = () => {
         <Route exact path='/' component={LoginContainer} />
       </Switch>
     </Router>
+
+    </AppContext.Provider>
   );
 };
 

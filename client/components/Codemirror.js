@@ -6,16 +6,7 @@ import 'codemirror/mode/xml/xml';
 import 'codemirror/mode/javascript/javascript';
 import 'codemirror/mode/css/css';
 
-// import context object
-// import { CodeContext } from '../state/contexts';
-
-function CodeBox({ codeBoxName }) {
-  //   const { codeState } = useContext(CodeContext);
-
-  //   let code;
-  //   codeState.showSchema
-  //     ? (code = codeState.schema)
-  //     : (code = codeState.resolver);
+function CodeBox({ codeBoxName, codeBoxValue,id }) {
 
   function handleChange(editor, data, value) {
     console.log(value);
@@ -28,10 +19,9 @@ function CodeBox({ codeBoxName }) {
         <CodeMirror
           onChange={handleChange}
           className='code-mirror-container'
-          value={codeBoxName}
+          value={codeBoxValue}
           options={{
             lineWrapping: true,
-            // theme: 'dracula',
             lineNumbers: true,
             cursorScrollMargin: 48,
             indentUnit: 2,
