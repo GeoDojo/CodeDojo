@@ -1,6 +1,6 @@
 export const initialAppState = {
-    prompt: 'dummy prompt',
-    function:  'dummy function',
+    prompt: '',
+    function:  '',
     winner: 'dummy winner',
     completedAlgos: {},
     totalRows: 0,
@@ -8,7 +8,7 @@ export const initialAppState = {
     currentPlayers: {},
     userFxn: '',
     time: '',
-    endGame: "",
+    endGame: '',
     // algoID: '',
     // algoName: '',
     // algoStart: FALSE,
@@ -21,7 +21,7 @@ export const appReducer = (state, action) => {
         case 'UPDATE_PROMPT':
       return {
         ...state,
-        prompt: action.payload.prompt,
+        prompt: action.payload,
       };
     }
     switch (action.type) {

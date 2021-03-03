@@ -16,38 +16,21 @@ const GameContainer = () => {
       {/* <p>{appState.totalRows}</p> */}
       <SubmitButton
         genericClick = { () => {
-            fetch(`/game/start`, {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'Application/JSON',
-                }
-                // , body: JSON.stringify({
-                // 
-                // }),
-              })
-                .then((data) => data.json())
-                .then((data) => {
-
-                    appDispatch({
-                        type: 'UPDATE_PROMPT',
-                        payload: { prompt: "prompt state updated", } //data.prompt
-                    })
-
-                    appDispatch({
-                        type: 'UPDATE_FUNCTION',
-                        payload: { function: "function state updated", }
-                    })  
-
-                    appDispatch({
-                            type: 'UPDATE_SUBMISSIONTESTSTATUS',
-                            payload: { submissionTestStatus: "true", }
-                        })
-
-                    // appDispatch({
-                    //     type: 'UPDATE_TOTALROWS',
-                    //     payload: { totalRows: "3", }
-                    // })
-                }) 
+            // fetch(`/game/submit`, {
+            //     method: 'POST',
+            //     headers: {
+            //       'Content-Type': 'Application/JSON',
+            //     }
+            //     , body: JSON.stringify({
+            //         //test_cases: ,
+            //         totalRows: 0,
+            //     }),
+            //   })
+            //     .then((data) => data.json())
+            //     .then((data) => {
+            //         console.log("from backend", data)
+            //        // 
+            //     }) 
         }}
         siteName={'Submit'}
         id='SubmitBtnGameContainer'
@@ -72,3 +55,44 @@ export default GameContainer;
             //         return num + 2;
             //     })`)
             // console.log(userFn(2))
+
+
+
+
+/*
+    genericClick = { () => {
+        fetch(`/game/start`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'Application/JSON',
+            }
+            , body: JSON.stringify({
+                completedAlgos: {},
+                totalRows: 0,
+            }),
+          })
+            .then((data) => data.json())
+            .then((data) => {
+                console.log("from backend", data)
+                appDispatch({
+                    type: 'UPDATE_PROMPT',
+                    payload: data.algoPrompt
+                })
+
+                appDispatch({
+                    type: 'UPDATE_FUNCTION',
+                    payload: data.algoStart 
+                })  
+
+                appDispatch({
+                        type: 'UPDATE_SUBMISSIONTESTSTATUS',
+                        payload: data.endGame
+                    })
+
+                appDispatch({
+                    type: 'UPDATE_TOTALROWS',
+                    payload: { totalRows: data.totalRows, }
+                })
+            }) 
+    }}
+*/
