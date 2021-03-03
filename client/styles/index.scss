@@ -1,39 +1,94 @@
 body {
-  background: peachpuff;
+  background: ghostwhite;
 }
 
 .generic-button {
-  width: 100px;
-  height: 60px;
-  margin-top: 20px;
-  font-size: 3rem;
-  background: blue;
-  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #444;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 5px -1px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  vertical-align: middle;
+  // max-width: 100px;
+  width: 10rem;
+  padding: 5px;
   text-align: center;
-  text-decoration: none;
-  border-radius: 7px;
+  transition: box-shadow 1.5s;
+  margin-bottom: 10px;
+  background: #ece9e6; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #ffffff,
+    #ece9e6
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #ffffff,
+    #ece9e6
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  position: sticky;
+  top: 0;
+}
+
+.generic-button:hover {
+  box-shadow: 0 8px 6px -6px black;
 }
 
 #GoogleBtn {
   border: 10px solid green;
 }
 
-
 #AnonymousBtn {
   border: 10px solid red;
 }
 
-#StartBtnWaitingRoom{
+#StartBtnWaitingRoom {
   border: 10px solid orange;
 }
 
-// .codebox {
-//   width: 100px;
-//   height: 60px;
-//   margin-top: 20px;
-//   background: blue;
-//   color: white;
-//   text-align: center;
-//   text-decoration: none;
-//   border-radius: 7px;
-// }
+.codebox-title {
+  display: flex;
+  // justify-content: space-between;
+  text-align: center;
+  justify-content: center;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande',
+    'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  background-color: hsl(225, 6%, 13%);
+  color: white;
+  padding: 0.5rem 0.5rem 0.5rem 1rem;
+  border-top-right-radius: 0.5rem;
+  border-top-left-radius: 0.5rem;
+  border: 0.5px solid white;
+}
+
+.codebox {
+  color: white;
+  text-decoration: none;
+  border: 0.5px solid white;
+}
+
+.panel {
+  display: flex;
+  flex-direction: rows;
+  flex-wrap: wrap;
+}
+
+.code-mirror-container {
+  min-width: 400px;
+  flex-grow: 1;
+  border-bottom-right-radius: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-width: 25%;
+  margin: 15px;
+  margin-top: 10rem;
+}
