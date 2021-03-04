@@ -11,15 +11,15 @@ const io = require('socket.io')(server);
 
 const PORT = 3000;
 
-// require the routes
-const gameRouter = require('./routes/gameRouter');
-const userRouter = require('./routes/userRouter');
+// // require the routes
+const algoController = require('./controllers/algoController');
+// const userRouter = require('./routes/userRouter');
 
 app.use(express.json());
 app.use(cookieParser());
 
-app.use('/game', gameRouter);
-app.use('/user', userRouter);
+// app.use('/game', gameRouter);
+// app.use('/user', userRouter);
 
 // handles static files for dev server
 app.use('/dist', express.static(path.resolve(__dirname, '../dist')));
@@ -59,20 +59,35 @@ io.on('connection', (socket) => {
   //this is when a user lands on our site
   //console.log('a user connected: ', socket.id)
 
-  socket.on('test', (arg) => {
-    console.log(arg)
-  })
-
   socket.on('joinRoom', (room) => {
     socket.join(room);
     console.log(`user ${socket.id} joined room: `, room)
   })
 
-  socket.on("getAlgo", (payload) => {
+  socket.on("getAlgo", async (payload) => {
+    let resObj = {}
+
     console.log('payload: ', payload)
 
-    // eventually the real middleware
+    console.log(resObj = await Object.assign(resObj, algoController.getTotalRows(payload)));
+    //resObj = Object.assign(resObj, algoController.getAlgo(resObj));
+    //console.log('getAlgo: ', algoController.get)
+    
 
+    io.sockets.emit('sendAlgo', resObj);
+
+  });
+
+  //Each socket also fires a special disconnect event:
+  socket.on('disconnect', () => {
+    console.log('a user disconnect', socket.id);
+  })
+})
+
+module.exports = server;
+
+
+/*
     const resBody = {
       algoName: 'Add Two',
       algoPrompt: 'take a num and add 2',
@@ -85,19 +100,4 @@ io.on('connection', (socket) => {
       },
       totalRows: 4
     };
-
-    // io.in(payload.roomNumber).emit("sendAlgo", resBody);
-    io.sockets.emit('sendAlgo', resBody);
-
-    //sending message to user, wecloming to chat room
-    //socket.emit('newAlgo', `Welcome to ${room}`);
-  });
-
-  //Each socket also fires a special disconnect event:
-  socket.on('disconnect', () => {
-    console.log('a user disconnect', socket.id);
-  })
-})
-
-//module.exports = app;
-module.exports = server;
+*/

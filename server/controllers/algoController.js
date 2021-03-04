@@ -8,81 +8,77 @@ const pool = new Pool({
 
 const algoController = {};
 
-algoController.getTotalRows = (req, res, next) => {
+algoController.getTotalRows = (payload) => {
   // if it's a new game
-  if (!req.body.totalRows) {
+  if (!payload.totalRows) {
     // grabbing total # of rows in the DB table
     const query = 'SELECT COUNT(*) FROM algorithms';
-
     pool
       .query(query)
       .then((data) => {
-        res.locals.totalRows = Number(data.rows[0].count);
-
-        return next();
+        return { 
+          totalRows: Number(data.rows[0].count),
+          completedAlgos: payload.completedAlgos,
+          roomNumber: payload.roomNumber, 
+        };
+      
       })
       .catch((e) => {
-        next({
-          log: `Error in algoController.getTotalRows - unable to retrieve total rows in database: ${e}`,
+        console.log(`Error in algoController.getTotalRows - unable to retrieve total rows in database: ${e}`);
         });
-      });
   } else {
-    const { totalRows } = req.body;
-    res.locals.totalRows = totalRows;
-    return next();
+    return {
+      totalRows: payload.totalRows,
+      completedAlgos: payload.completedAlgos,
+      roomNumber: payload.roomNumber, 
+    }
   }
 };
 
-algoController.getAlgo = (req, res, next) => {
-  // checking if total rows is desired value
-  if (!res.locals.totalRows || typeof res.locals.totalRows !== 'number') {
-    return next({
-      log:
-        'Error in algoController.getAlgo - res.locals.totalRows does not have the correct value',
-    });
-  }
-
+algoController.getAlgo = (resObj) => {
   // generate a random algo ID, confirm if we have not called it
-  const { completedAlgos } = req.body;
+  const { completedAlgos, totalRows } = resObj;
 
-  let newAlgoID = Math.floor(Math.random() * res.locals.totalRows);
+  let newAlgoID = Math.floor(Math.random() * totalRows);
 
   while (completedAlgos[newAlgoID]) {
-    newAlgoID = Math.floor(Math.random() * res.locals.totalRows);
+    newAlgoID = Math.floor(Math.random() * totalRows);
   }
 
   // add the new algo ID to our completedAlgos cache to keep track of all the sent algos
   completedAlgos[newAlgoID] = true;
-  // need to send back the updated cache to the client
-  res.locals.completedAlgos = completedAlgos;
-
+  
   // retrieve a new algo from DB
   const query = `SELECT * FROM algorithms WHERE algo_id = ${newAlgoID}`;
   pool
     .query(query)
     .then((data) => {
-      res.locals.returnObj = data.rows[0];
-      return next();
+      const returnObj = data.rows[0];
+
+
+
+      return {
+        algoID: returnObj.algo_id,
+        algoName: returnObj.algo_name,
+        algoPrompt: returnObj.algo_prompt,
+        test_cases: returnObj.test_cases,
+        algoStart: `function(${returnObj.function_name}(${returnObj.parameters}){
+          // write your code here. Good luck :P
+        })`
+      };
     })
     .catch((e) => {
-      next({
-        log: `Error in algoController.getAlgos - unable to retrieve an algo from database: ${e}`,
+      console.log(`Error in algoController.getAlgos - unable to retrieve an algo from database: ${e}`)
       });
-    });
 };
 
-algoController.generateAlgoStart = (req, res, next) => {
-  if (!res.locals.returnObj.function_name || !res.locals.returnObj.parameters) {
-    return next({
-      log: `Error in algoController.generateAlgoStart - Issue with either function_name or parameters: ${e}`,
-    });
-  }
+// algoController.generateAlgoStart = (req, res, next) => {
 
-  res.locals.algoStart = `function(${res.locals.returnObj.function_name}(${res.locals.returnObj.parameters}){
-      // write your code here. Good luck :P
-    })`;
-  return next();
-};
+//   res.locals.algoStart = `function(${res.locals.returnObj.function_name}(${res.locals.returnObj.parameters}){
+//       // write your code here. Good luck :P
+//     })`;
+//   return next();
+// };
 
 algoController.testFunction = (req, res, next) => {
   // validating and santizing the inputs
