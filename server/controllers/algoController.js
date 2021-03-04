@@ -6,103 +6,88 @@ const pool = new Pool({
   connectionString: URI,
 });
 
-const algoController = {};
 
-algoController.getTotalRows = (req, res, next) => {
+async function getTotalRows(payload){
   // if it's a new game
-  if (!req.body.totalRows) {
+  
+  if (!payload.totalRows) {
     // grabbing total # of rows in the DB table
     const query = 'SELECT COUNT(*) FROM algorithms';
-
-    pool
-      .query(query)
+    
+    // result -> obj or the error message
+    const result = await pool.query(query)
       .then((data) => {
-        res.locals.totalRows = Number(data.rows[0].count);
-
-        return next();
-      })
-      .catch((e) => {
-        next({
-          log: `Error in algoController.getTotalRows - unable to retrieve total rows in database: ${e}`,
-        });
-      });
+        return { 
+            totalRows: Number(data.rows[0].count),
+            completedAlgos: payload.completedAlgos,
+            roomNumber: payload.roomNumber, 
+          };
+        
+        })
+        .catch((e) => {
+          console.log(`Error in algoController.getTotalRows - unable to retrieve total rows in database: ${e}`);
+          });
+        
+     return result;
   } else {
-    const { totalRows } = req.body;
-    res.locals.totalRows = totalRows;
-    return next();
+    return {
+      totalRows: payload.totalRows,
+      completedAlgos: payload.completedAlgos,
+      roomNumber: payload.roomNumber, 
+    }
   }
 };
 
-algoController.getAlgo = (req, res, next) => {
-  // checking if total rows is desired value
-  if (!res.locals.totalRows || typeof res.locals.totalRows !== 'number') {
-    return next({
-      log:
-        'Error in algoController.getAlgo - res.locals.totalRows does not have the correct value',
-    });
-  }
-
+async function getAlgo(payload) {
   // generate a random algo ID, confirm if we have not called it
-  const { completedAlgos } = req.body;
+  const { completedAlgos, totalRows } = payload;
 
-  let newAlgoID = Math.floor(Math.random() * res.locals.totalRows);
+  let newAlgoID = Math.ceil(Math.random() * totalRows);
 
   while (completedAlgos[newAlgoID]) {
-    newAlgoID = Math.floor(Math.random() * res.locals.totalRows);
+    newAlgoID = Math.ceil(Math.random() * totalRows);
   }
 
   // add the new algo ID to our completedAlgos cache to keep track of all the sent algos
   completedAlgos[newAlgoID] = true;
-  // need to send back the updated cache to the client
-  res.locals.completedAlgos = completedAlgos;
 
   // retrieve a new algo from DB
   const query = `SELECT * FROM algorithms WHERE algo_id = ${newAlgoID}`;
-  pool
-    .query(query)
+  console.log('query: ', query);
+
+  // result -> 2 values: object or error
+  const newAlgoObj = await pool.query(query)
     .then((data) => {
-      res.locals.returnObj = data.rows[0];
-      return next();
+      const dataObj = data.rows[0];
+      return {
+        algoID: dataObj.algo_id,
+        algoName: dataObj.algo_name,
+        algoPrompt: dataObj.algo_prompt,
+        test_cases: dataObj.test_cases,
+        algoStart: `function ${dataObj.function_name}(${dataObj.parameters}){
+          // write your code here. Good luck :P
+        }`
+      };
     })
     .catch((e) => {
-      next({
-        log: `Error in algoController.getAlgos - unable to retrieve an algo from database: ${e}`,
+      console.log(`Error in getAlgos - unable to retrieve an algo from database: ${e}`)
       });
-    });
+
+  const finalResObj = Object.assign(payload, newAlgoObj);    
+  return finalResObj;
 };
 
-algoController.generateAlgoStart = (req, res, next) => {
-  if (!res.locals.returnObj.function_name || !res.locals.returnObj.parameters) {
-    return next({
-      log: `Error in algoController.generateAlgoStart - Issue with either function_name or parameters: ${e}`,
-    });
-  }
-
-  res.locals.algoStart = `function(${res.locals.returnObj.function_name}(${res.locals.returnObj.parameters}){
-      // write your code here. Good luck :P
-    })`;
-  return next();
-};
-
-algoController.testFunction = (req, res, next) => {
+function testUserFxn(req, socketID) {
   // validating and santizing the inputs
-  if (
-    !req.body.test_cases ||
-    !req.body.username ||
-    !req.body.time ||
-    !req.body.userFxn
-  ) {
-    return next({
-      log: `Error in algoController.testFunction - missing necessary req.body properties`,
-      status: 206,
-      message: { err: 'Missing required POST request properties' },
-    });
-  }
 
-  const { test_cases, username, userFxn, time } = req.body;
+  console.log('payload: ', req);
+  // eventually put back req.username
+  if (!req.test_cases || !req.userFxn) return console.log(`Error in algoController.testUserFxn - missing necessary required properties`);
+
+
+  const { test_cases, username, userFxn } = req;
   let pass = true;
   // test the user input fxn with the test cases
-  // test_cases: [[input, output]]
 
   // iterate through the test_cases array, and pass in the input -> expect the output
   const userFunc = eval(userFxn);
@@ -112,12 +97,17 @@ algoController.testFunction = (req, res, next) => {
   });
 
   // if user is correct, send back the username
+  const endGameObj = {} 
   if (pass) {
-    res.locals.winner = username;
+    endGameObj.winner = socketID;
   }
 
-  res.locals.endGame = pass;
-  return next();
+  endGameObj.endGame = pass;
+  return endGameObj;
 };
 
-module.exports = algoController;
+module.exports = {
+  getTotalRows,
+  getAlgo,
+  testUserFxn,
+};

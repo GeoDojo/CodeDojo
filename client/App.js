@@ -17,57 +17,8 @@ const App = () => {
 
   const [appState, appDispatch] = useReducer(appReducer, initialAppState); 
 
-  const checkSocket = () => {
-    socket.emit('test', `This is the first socket test from ${socket.id}`);
-  };
-
-  // let updateState = {};
-  
-
-  //  useEffect(()=> {
-
-  //     console.log('before dispatchers launch: ', updateState)
-
-  //     if (updateState.algoName !== appState.algoName){
-  //       appDispatch({
-  //         type: 'UPDATE_PROMPT',
-  //         payload: updateState.algoPrompt
-  //       })
-
-  //       appDispatch({
-  //           type: 'UPDATE_FUNCTION',
-  //           payload: updateState.algoStart 
-  //       })  
-
-  //      appDispatch({
-  //             type: 'UPDATE_COMPLETEDALGOS',
-  //             payload: updateState.completedAlgos
-  //         })
-
-  //       appDispatch({
-  //           type: 'UPDATE_TOTALROWS',
-  //           payload: updateState.totalRows
-  //       })
-
-  //       appDispatch({
-  //           type: 'STORE_TEST_CASES',
-  //           payload: updateState.test_cases,
-  //       })
-
-  //       appDispatch({
-  //         type: 'UPDATE_ALGONAME',
-  //         payload: updateState.algoName,
-  //       })
-  //     }
-  //   }, [updateState])
-
   socket.on('sendAlgo', (resBody) => {
-    console.log('App.jsx got back from server resbody: ', resBody)
       
-    // updateState = Object.assign({}, resBody);
-    // console.log('after object.assign: ', updateState)
-
-
     appDispatch({
       type: 'UPDATE_PROMPT',
       payload: resBody.algoPrompt
@@ -97,8 +48,6 @@ const App = () => {
       type: 'UPDATE_ALGONAME',
       payload: resBody.algoName,
     })
-
-
   })
 
   socket.on('addUser', (newUser) => {
@@ -106,6 +55,11 @@ const App = () => {
       type: 'ADD_USER',
       payload: newUser
     })
+  })
+
+  socket.on('results', (results) => {
+    console.log('results from submission: ', results);
+    // check if endGame is true, if so, find the winner's socketID in appState.completedAlgos and display winner
   })
 
   return (
