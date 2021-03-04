@@ -53,7 +53,6 @@ async function getAlgo(payload) {
 
   // retrieve a new algo from DB
   const query = `SELECT * FROM algorithms WHERE algo_id = ${newAlgoID}`;
-  console.log('query: ', query);
 
   // result -> 2 values: object or error
   const newAlgoObj = await pool.query(query)
@@ -80,7 +79,6 @@ async function getAlgo(payload) {
 function testUserFxn(req, socketID) {
   // validating and santizing the inputs
 
-  console.log('payload: ', req);
   // eventually put back req.username
   if (!req.test_cases || !req.userFxn) return console.log(`Error in algoController.testUserFxn - missing necessary required properties`);
 
