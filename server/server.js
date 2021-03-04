@@ -13,6 +13,7 @@ const PORT = 3000;
 
 // // require the routes
 const algoHelper = require('./algoHelper');
+const { testUserFxn } = require('./controllers/algoController');
 const userRouter = require('./routes/userRouter');
 
 app.use(express.json());
@@ -62,18 +63,19 @@ io.on('connection', (socket) => {
   socket.on('joinRoom', (room) => {
     socket.join(room);
     console.log(`user ${socket.id} joined room: `, room)
-    io.sockets.emit("addUser", ["heidi", socket.id]) //key value pair
+    io.sockets.emit("addUser", [socket.id, 'heidi']) //key value pair
   })
 
   socket.on('getAlgo', async (payload) => {
-    const finalresObj = await algoHelper(payload);
+    const finalResObj = await algoHelper(payload);
 
-    io.sockets.emit('sendAlgo', finalresObj);
+    io.sockets.emit('sendAlgo', finalResObj);
   });
 
   socket.on('submitAlgo', async (payload) => {
-    console.log('submitAlgo payload: ', payload)
-    //io.sockets.emit('results', )
+
+    const finalResObj = testUserFxn(payload, socket.id);
+    io.sockets.emit('results', finalResObj);
   })
 
   //Each socket also fires a special disconnect event:

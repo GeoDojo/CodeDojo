@@ -30,13 +30,13 @@ const GameContainer = () => {
       <SubmitButton
         genericClick = { () => {
 
-
+          const evalFxn = '(' + appState.userFxn + ')';
 
 
           socket.emit('submitAlgo', {
             test_cases: appState.test_cases,
             username: appState.username,
-            userFxn: appState.userFxn,
+            userFxn: evalFxn,
           })
            
         }}

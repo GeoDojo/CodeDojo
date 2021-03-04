@@ -11,7 +11,7 @@ export const initialAppState = {
     endGame: '',
     test_cases: [],
     roomNumber: 123,
-    // algoID: '',
+    currentPlayer: '',
     algoName: '',
     // algoStart: FALSE,
     // algoPrompt: '',
@@ -19,7 +19,14 @@ export const initialAppState = {
 
 //from react hook, return hook which is a general state and general dispatch (is reducer)
 export const appReducer = (state, action) => {
-    switch (action.type) {
+  switch (action.type) {
+      case 'SET_PLAYER':
+    return {
+      ...state,
+      currentPlayer: action.payload,
+    };
+  }
+  switch (action.type) {
         case 'UPDATE_PROMPT':
       return {
         ...state,
@@ -98,16 +105,16 @@ export const appReducer = (state, action) => {
   }
   switch (action.type) {
     case 'UPDATE_ALGONAME':
-  return {
-    ...state,
-    algoName: action.payload,
-  };
+    return {
+      ...state,
+      algoName: action.payload,
+    };
   }
   switch (action.type) {
     case 'ADD_USER':
     const newState = {...state}
-    newState.currentPlayers[action.payload[0]] = action.payload[1]
+    newState.currentPlayers[action.payload[0]] = action.payload[[1]]
     return newState;
-}
+  }
 }
 

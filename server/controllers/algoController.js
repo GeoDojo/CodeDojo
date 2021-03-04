@@ -64,9 +64,9 @@ async function getAlgo(payload) {
         algoName: dataObj.algo_name,
         algoPrompt: dataObj.algo_prompt,
         test_cases: dataObj.test_cases,
-        algoStart: `function(${dataObj.function_name}(${dataObj.parameters}){
+        algoStart: `function ${dataObj.function_name}(${dataObj.parameters}){
           // write your code here. Good luck :P
-        })`
+        }`
       };
     })
     .catch((e) => {
@@ -77,25 +77,17 @@ async function getAlgo(payload) {
   return finalResObj;
 };
 
-function testFunction(req, res, next) {
+function testUserFxn(req, socketID) {
   // validating and santizing the inputs
-  if (
-    !req.body.test_cases ||
-    !req.body.username ||
-    !req.body.time ||
-    !req.body.userFxn
-  ) {
-    return next({
-      log: `Error in algoController.testFunction - missing necessary req.body properties`,
-      status: 206,
-      message: { err: 'Missing required POST request properties' },
-    });
-  }
 
-  const { test_cases, username, userFxn, time } = req.body;
+  console.log('payload: ', req);
+  // eventually put back req.username
+  if (!req.test_cases || !req.userFxn) return console.log(`Error in algoController.testUserFxn - missing necessary required properties`);
+
+
+  const { test_cases, username, userFxn } = req;
   let pass = true;
   // test the user input fxn with the test cases
-  // test_cases: [[input, output]]
 
   // iterate through the test_cases array, and pass in the input -> expect the output
   const userFunc = eval(userFxn);
@@ -105,16 +97,17 @@ function testFunction(req, res, next) {
   });
 
   // if user is correct, send back the username
+  const endGameObj = {} 
   if (pass) {
-    res.locals.winner = username;
+    endGameObj.winner = socketID;
   }
 
-  res.locals.endGame = pass;
-  return next();
+  endGameObj.endGame = pass;
+  return endGameObj;
 };
 
 module.exports = {
   getTotalRows,
   getAlgo,
-  testFunction,
+  testUserFxn,
 };

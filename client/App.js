@@ -18,7 +18,6 @@ const App = () => {
   const [appState, appDispatch] = useReducer(appReducer, initialAppState); 
 
   socket.on('sendAlgo', (resBody) => {
-    console.log('App.jsx got back from server resbody: ', resBody)
       
     appDispatch({
       type: 'UPDATE_PROMPT',
@@ -49,8 +48,6 @@ const App = () => {
       type: 'UPDATE_ALGONAME',
       payload: resBody.algoName,
     })
-
-
   })
 
   socket.on('addUser', (newUser) => {
@@ -58,6 +55,11 @@ const App = () => {
       type: 'ADD_USER',
       payload: newUser
     })
+  })
+
+  socket.on('results', (results) => {
+    console.log('results from submission: ', results);
+    // check if endGame is true, if so, find the winner's socketID in appState.completedAlgos and display winner
   })
 
   return (

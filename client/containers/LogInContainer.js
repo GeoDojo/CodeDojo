@@ -13,7 +13,6 @@ const LogInContainer = () => {
   //     console.log("logged In")
   //{/* {<AppContextProvider> } */}
      
-
   //to-dos: for facebook, github
   //to-dos: anonymous
   //to-dos: reRoute to waitingRoom (this might be in the App.js)
@@ -47,7 +46,6 @@ const LogInContainer = () => {
             id='AnonymousBtn'
             siteName={'Anonymous'}
             genericClick={() => {
-              console.log('room # in loginContainer: ', appState.roomNumber);
               socket.emit('joinRoom', appState.roomNumber);
             }}
           />
