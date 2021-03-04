@@ -15,7 +15,7 @@ const DashBoardContainer = () => {
 
   return (
     //wrap this into link
-    <div>
+    <div className="dashboard">
       <Link to="/game">
         <ReplayButton
           genericClick={() => {}}

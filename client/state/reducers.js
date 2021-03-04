@@ -8,7 +8,7 @@ export const initialAppState = {
     currentPlayers: {},
     userFxn: '',
     time: '',
-    endGame: '',
+    endRound: '',
     test_cases: [],
     roomNumber: 123,
     currentPlayer: '',
@@ -90,10 +90,10 @@ export const appReducer = (state, action) => {
       };
     }
     switch (action.type) {
-        case 'UPDATE_EndGame':
+        case 'UPDATE_EndRound':
       return {
         ...state,
-        endGame: action.payload,
+        endRound: action.payload,
       };
     }
     switch (action.type) {
