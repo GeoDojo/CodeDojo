@@ -20,7 +20,7 @@ const LogInContainer = () => {
 
   return (
     <div className='login-container'>
-      <Link to='/waitingroom'>
+      <Link to='/game'>
         {/* Reusing the Button.js component and passing genericClick to  */}
         <LoginButton
           id='GoogleBtn'

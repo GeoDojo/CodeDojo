@@ -1,17 +1,33 @@
 import React, { useContext, createContext, useEffect, useReducer, Provider } from 'react';
 import CodeBox from '../components/codeBox';
-import PromptCodeBox from '../components/PromptCodeBox';
+//import PromptCodeBox from '../components/PromptCodeBox';
 import SubmitButton from '../components/Button';
-import TotalRowsButton from '../components/Button';
+import StartButton from '../components/Button'
+//import TotalRowsButton from '../components/Button';
 import { AppContext } from '../state/context';
+
+import { io } from 'socket.io-client';
+const socket = io()
 
 const GameContainer = () => {
 
   const { appState, appDispatch } = useContext(AppContext);
 
+  const getAlgoPayload = {
+    completedAlgos: appState.completedAlgos,
+    totalRows: appState.totalRows,
+    roomNumber: appState.roomNumber,
+  };
+
   return (
     <div className='panel'>
       {/* {<PromptCodeBox/>} */}
+      <StartButton 
+                genericClick={() => {
+                    socket.emit('getAlgo', getAlgoPayload);
+                }}
+                siteName = {"Start"} id="StartBtnWaitingRoom"/>
+
       <div className='prompContainer'>
         <h1>{appState.algoName}</h1>
         <p>{appState.prompt}</p>
