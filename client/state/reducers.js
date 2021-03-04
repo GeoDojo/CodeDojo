@@ -4,13 +4,15 @@ export const initialAppState = {
     winner: 'dummy winner',
     completedAlgos: {},
     totalRows: 0,
-    submissionTestStatus: "dummy false",
+    submissionTestStatus: "",
     currentPlayers: {},
     userFxn: '',
     time: '',
     endGame: '',
+    test_cases: [],
+    roomNumber: 123,
     // algoID: '',
-    // algoName: '',
+    algoName: '',
     // algoStart: FALSE,
     // algoPrompt: '',
 };
@@ -28,7 +30,7 @@ export const appReducer = (state, action) => {
         case 'UPDATE_FUNCTION':
       return {
         ...state,
-        function: action.payload.function,
+        function: action.payload,
       };
     }
     switch (action.type) {
@@ -42,43 +44,57 @@ export const appReducer = (state, action) => {
         case 'UPDATE_COMPLETEDALGOS':
       return {
         ...state,
-        completedAlgos: action.payload.completedAlgos,
+        completedAlgos: action.payload,
       };
     }
     switch (action.type) {
         case 'UPDATE_TOTALROWS':
       return {
         ...state,
-        totalRows: action.payload.totalRows,
+        totalRows: action.payload,
       };
     }
     switch (action.type) {
         case 'UPDATE_SUBMISSIONTESTSTATUS':
       return {
         ...state,
-        submissionTestStatus: action.payload.submissionTestStatus,
+        submissionTestStatus: action.payload,
       };
     }
     switch (action.type) {
         case 'UPDATE_USERNAME':
       return {
         ...state,
-        currentPlayers: action.payload.currentPlayers,
+        currentPlayers: action.payload,
       };
     }
     switch (action.type) {
         case 'UPDATE_TIME':
       return {
         ...state,
-        time: action.payload.time,
+        time: action.payload,
       };
     }
     switch (action.type) {
         case 'UPDATE_EndGame':
       return {
         ...state,
-        endGame: action.payload.endGame,
+        endGame: action.payload,
       };
     }
+    switch (action.type) {
+      case 'STORE_TEST_CASES':
+    return {
+      ...state,
+      test_cases: action.payload,
+    };
+  }
+  switch (action.type) {
+    case 'UPDATE_ALGONAME':
+  return {
+    ...state,
+    algoName: action.payload,
+  };
+}
 }
 

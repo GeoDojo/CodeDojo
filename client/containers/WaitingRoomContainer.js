@@ -1,19 +1,48 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Link} from 'react-router-dom';
 import StartButton from '../components/Button'
+import { AppContext } from '../state/context';
+import { io } from 'socket.io-client';
+const socket = io();
+
+
 
 
 const WaitingRoomContainer = () => {
 
     //to-do: display the list of users logged in or anonymous
         //empty and reset the whole array everytime the StartButton has been clicked or user join or user left
+    const { appState, appDispatch } = useContext(AppContext);
+    
+    const getAlgoPayload = {
+        completedAlgos: appState.completedAlgos,
+        totalRows: appState.totalRows,
+        roomNumber: appState.roomNumber,
+    };
 
     return (//wrap this into link
         <div>
         <Link to='/game'>
             <StartButton 
-                genericClick = { () => {
-                fetch(`/game/start`, {
+                genericClick={() => {
+                    socket.emit('getAlgo', getAlgoPayload);
+                }}
+                siteName = {"Start"} id="StartBtnWaitingRoom"/>
+
+            
+        </Link>
+        </div>
+    )
+}
+
+export default WaitingRoomContainer;
+
+
+/*
+original fetch request:
+
+
+fetch(`/game/start`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'Application/JSON',
@@ -36,23 +65,23 @@ const WaitingRoomContainer = () => {
                             payload: data.algoStart 
                         })  
 
-                        // appDispatch({
-                        //         type: 'UPDATE_SUBMISSIONTESTSTATUS',
-                        //         payload: data.endGame
-                        //     })
+                        appDispatch({
+                                type: 'UPDATE_COMPLETEDALGOS',
+                                payload: data.completedAlgos
+                            })
 
                         appDispatch({
                             type: 'UPDATE_TOTALROWS',
-                            payload: { totalRows: data.totalRows, }
+                            payload: data.totalRows
+                        })
+
+                        appDispatch({
+                            type: 'STORE_TEST_CASES',
+                            payload: data.test_cases,
                         })
                     }) 
-                }}
-                siteName = {"Start"} id="StartBtnWaitingRoom" genericClick={ "start" }/>
 
-            
-        </Link>
-        </div>
-    )
-}
 
-export default WaitingRoomContainer;
+
+
+*/

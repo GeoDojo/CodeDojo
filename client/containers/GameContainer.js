@@ -1,16 +1,21 @@
 import React, { useContext, createContext, useEffect, useReducer, Provider } from 'react';
-import CodeBox from '../components/Codemirror';
+import CodeBox from '../components/codeBox';
+import PromptCodeBox from '../components/PromptCodeBox';
 import SubmitButton from '../components/Button';
 import TotalRowsButton from '../components/Button';
 import { AppContext } from '../state/context';
 
 const GameContainer = () => {
 
-    const { appState, appDispatch } = useContext(AppContext);
+  const { appState, appDispatch } = useContext(AppContext);
 
   return (
     <div className='panel'>
-      <CodeBox codeBoxName={'Prompt'} codeBoxValue={appState.prompt}/>
+      {/* {<PromptCodeBox/>} */}
+      <div className='prompContainer'>
+        <h1>{appState.algoName}</h1>
+        <p>{appState.prompt}</p>
+      </div>
       <CodeBox codeBoxName={'Function'} codeBoxValue={appState.function}/>
       <CodeBox codeBoxName={'Submission Result'} codeBoxValue={appState.submissionTestStatus}/> 
       {/* <p>{appState.totalRows}</p> */}

@@ -1,7 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import LoginButton from '../components/Button';
+import { io } from 'socket.io-client';
+const socket = io()
+
+import { AppContext } from '../state/context';
 
 const LogInContainer = () => {
+
+  const { appState } = useContext(AppContext);
   //to-do: using OAuth instructions
   // const googleLogin = () => {
   //     console.log("logged In")
@@ -32,7 +38,10 @@ const LogInContainer = () => {
       <LoginButton
         id='AnonymousBtn'
         siteName={'Anonymous'}
-        genericClick={'ANON Login'}
+        genericClick={() => {
+          console.log('room # in loginContainer: ', appState.roomNumber)
+          socket.emit('joinRoom', appState.roomNumber)
+        }}
       />
     </div>
   );
