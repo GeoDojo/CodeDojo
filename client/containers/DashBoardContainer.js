@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import ReplayButton from '../components/Button';
 import ExitGameButton from '../components/Button';
 import { AppContext } from '../state/context';
+import ImageAvatars from '../components/ImageAvartar';
 
 const DashBoardContainer = () => {
 
@@ -31,6 +32,10 @@ const displayAvatar = () => {
                 }}
                 siteName = {"Exit"} id="ExitBtnWaitingRoom"/>
         </Link>
+        <div className='prompContainer'>
+            <h1>Winner:</h1>
+        </div>
+        <ImageAvatars/>
         </div>
     )
 }
