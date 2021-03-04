@@ -65,21 +65,16 @@ io.on('connection', (socket) => {
     io.sockets.emit("addUser", ["heidi", socket.id]) //key value pair
   })
 
-  socket.on("getAlgo", async (payload) => {
-
-    console.log('payload from socket: ', payload)
-
+  socket.on('getAlgo', async (payload) => {
     const finalresObj = await algoHelper(payload);
-    console.log('after algoHelper in server.js: ', finalresObj);
-
-    // console.log(resObj = await Object.assign(resObj, algoController.getTotalRows(payload)));
-    // //resObj = Object.assign(resObj, algoController.getAlgo(resObj));
-    // //console.log('getAlgo: ', algoController.get)
-    
 
     io.sockets.emit('sendAlgo', finalresObj);
-
   });
+
+  socket.on('submitAlgo', async (payload) => {
+    console.log('submitAlgo payload: ', payload)
+    //io.sockets.emit('results', )
+  })
 
   //Each socket also fires a special disconnect event:
   socket.on('disconnect', () => {
@@ -88,19 +83,3 @@ io.on('connection', (socket) => {
 })
 
 module.exports = server;
-
-
-/*
-    const resBody = {
-      algoName: 'Add Two',
-      algoPrompt: 'take a num and add 2',
-      algoStart: `function addTwo(num){
-        //enter your code here...
-      };`,
-      test_cases: [[1, 3], [2, 4]],
-      completedAlgos: {
-        2: true,
-      },
-      totalRows: 4
-    };
-*/

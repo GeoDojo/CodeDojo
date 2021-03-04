@@ -9,49 +9,39 @@ import { io } from 'socket.io-client';
 const socket = io()
 const GameContainer = () => {
   const { appState, appDispatch } = useContext(AppContext);
-  const getAlgoPayload = {
-    completedAlgos: appState.completedAlgos,
-    totalRows: appState.totalRows,
-    roomNumber: appState.roomNumber,
-  };
 
   return (
     <div className='panel'>
       <ImageAvartar />
       <StartButton 
                 genericClick={() => {
-                    socket.emit('getAlgo', getAlgoPayload);
+                    socket.emit('getAlgo', {
+                      completedAlgos: appState.completedAlgos,
+                      totalRows: appState.totalRows,
+                      roomNumber: appState.roomNumber,
+                    });
                 }}
                 siteName = {"Start"} id="StartBtnWaitingRoom"/>
       <div className='prompContainer'>
         <h1>{appState.algoName}</h1>
         <p>{appState.prompt}</p>
       </div>
-      <CodeBox codeBoxName={'Your Input'} codeBoxValue={appState.function}/>
-      {/* <CodeBox codeBoxName={'Submission Result'} codeBoxValue={appState.submissionTestStatus}/>  */}
-      {/* <p>{appState.totalRows}</p> */}
-      
+      <CodeBox codeBoxName={'Your Input'} codeBoxValue={appState.function}/>      
       <SubmitButton
         genericClick = { () => {
-            // fetch(`/game/submit`, {
-            //     method: 'POST',
-            //     headers: {
-            //       'Content-Type': 'Application/JSON',
-            //     }
-            //     , body: JSON.stringify({
-            //         //test_cases: ,
-            //         totalRows: 0,
-            //     }),
-            //   })
-            //     .then((data) => data.json())
-            //     .then((data) => {
-            //         console.log("from backend", data)
-            //        // 
-            //     }) 
+
+
+
+
+          socket.emit('submitAlgo', {
+            test_cases: appState.test_cases,
+            username: appState.username,
+            userFxn: appState.userFxn,
+          })
+           
         }}
         siteName={'Submit'}
         id='SubmitBtnGameContainer'
-        // genericClick={'submit'}
       />
       <Dialog />
     </div>

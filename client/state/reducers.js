@@ -34,6 +34,13 @@ export const appReducer = (state, action) => {
       };
     }
     switch (action.type) {
+      case 'UPDATE_USERFXN':
+    return {
+      ...state,
+      userFxn: action.payload,
+    };
+  }
+    switch (action.type) {
         case 'UPDATE_WINNER':
       return {
         ...state,

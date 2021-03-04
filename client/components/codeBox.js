@@ -1,15 +1,21 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { UnControlled as CodeMirror } from 'react-codemirror2';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/material.css';
 import 'codemirror/mode/xml/xml';
 import 'codemirror/mode/javascript/javascript';
 import 'codemirror/mode/css/css';
+import { AppContext } from '../state/context';
 
 function CodeBox({ codeBoxName, codeBoxValue,id }) {
 
+  const { appDispatch } = useContext(AppContext);
+
   function handleChange(editor, data, value) {
-    console.log(value);
+    appDispatch({
+      type: 'UPDATE_USERFXN',
+      payload: value,
+    })
   }
 
   return (

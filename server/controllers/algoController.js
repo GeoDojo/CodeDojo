@@ -6,7 +6,6 @@ const pool = new Pool({
   connectionString: URI,
 });
 
-const algoController = {};
 
 async function getTotalRows(payload){
   // if it's a new game
@@ -78,15 +77,7 @@ async function getAlgo(payload) {
   return finalResObj;
 };
 
-// algoController.generateAlgoStart = (req, res, next) => {
-
-//   res.locals.algoStart = `function(${res.locals.returnObj.function_name}(${res.locals.returnObj.parameters}){
-//       // write your code here. Good luck :P
-//     })`;
-//   return next();
-// };
-
-algoController.testFunction = (req, res, next) => {
+function testFunction(req, res, next) {
   // validating and santizing the inputs
   if (
     !req.body.test_cases ||
@@ -124,5 +115,6 @@ algoController.testFunction = (req, res, next) => {
 
 module.exports = {
   getTotalRows,
-  getAlgo
+  getAlgo,
+  testFunction,
 };
