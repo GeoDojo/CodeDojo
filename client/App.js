@@ -7,7 +7,7 @@ import { Switch, Route } from 'react-router-dom';
 import LoginContainer from './containers/LoginContainer';
 import WaitingRoomContainer from './containers/WaitingRoomContainer';
 import GameContainer from './containers/GameContainer';
-
+import DashBoardContainer from './containers/DashBoardContainer';
 
 import { AppContext } from './state/context';
 import { initialAppState, appReducer} from './state/reducers';
@@ -101,6 +101,13 @@ const App = () => {
 
   })
 
+  socket.on('addUser', (newUser) => {
+    appDispatch({
+      type: 'ADD_USER',
+      payload: newUser
+    })
+  })
+
   return (
     <AppContext.Provider 
       value={{
@@ -109,6 +116,7 @@ const App = () => {
     }}>
       
       <Switch>
+        <Route path='/dashboard' component={DashBoardContainer} />
         <Route path='/waitingroom' component={WaitingRoomContainer} />
         <Route exact path='/game' component={GameContainer} />
         <Route exact path='/' component={LoginContainer} />
