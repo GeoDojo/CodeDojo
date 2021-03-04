@@ -8,54 +8,61 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { AppContext } from "../state/context";
 import { io } from "socket.io-client";
+
 const socket = io();
 
 export default function AlertDialog() {
   const [open, setOpen] = React.useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
   const { appState, appDispatch } = useContext(AppContext);
 
-  const getAlgoPayload = {
-    completedAlgos: appState.completedAlgos,
-    totalRows: appState.totalRows,
-    roomNumber: appState.roomNumber,
-  };
+  const HandleClickOpen = () => {
+    setOpen(true);
+  }
 
   const handleClose = () => {
     setOpen(false);
-  };
+  }
 
-  const nextAlgoHandleClick = () => {
-    setOpen(false);
-    socket.emit("getAlgo", getAlgoPayload);
-  };
+const nextAlgoHandleClick = () => {
+  setOpen(false);
+  socket.emit('getAlgo', {
+    completedAlgos: appState.completedAlgos,
+    totalRows: appState.totalRows,
+    roomNumber: appState.roomNumber,
+  })
+};
 
-  const LeaveGameHandleClick = () => {
-    setOpen(false);
-    // <Link to='/'>
+const LeaveGameHandleClick = () => {
+  setOpen(false);
+};
 
-    // </Link>
-  };
+//create array of encouraging words if user pass
+// create array of retry if user fail
+// endGame status from backend
 
-  //create array of encouraging words if user pass
-  //create array of retry if user fail
-  //endGame status from backend
+return (
+  <div>
+    <Button variant="outlined" color="primary" onClick={() => {
 
-  return (
-    <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Submit
-      </Button>
+      const evalFxn = '(' + appState.userFxn + ')';
+
+      socket.emit('submitAlgo', {
+        test_cases: appState.test_cases,
+        username: appState.username,
+        userFxn: evalFxn,
+      })
+      HandleClickOpen()
+      }}>
+        submit
+    </Button>
+
       <Dialog
-        open={open}
+      open={open}
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">{"Code Dojo"}</DialogTitle>
+      <DialogTitle id="alert-dialog-title">{"Code Dojo"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
             "Hooray! Great work on the Algo! Let's try another one!"
@@ -73,5 +80,6 @@ export default function AlertDialog() {
         </DialogActions>
       </Dialog>
     </div>
-  );
+);
 }
+

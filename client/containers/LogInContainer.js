@@ -11,7 +11,7 @@ const LogInContainer = () => {
   //to-do: using OAuth instructions
   // const googleLogin = () => {
   //     console.log("logged In")
-  // }
+  //{/* {<AppContextProvider> } */}
 
   //to-dos: for facebook, github
   //to-dos: anonymous
@@ -47,7 +47,7 @@ const LogInContainer = () => {
             id="AnonymousBtn"
             siteName={"Play Anonymously"}
             genericClick={() => {
-              const body = document.querySelect("body");
+              const body = document.querySelector("body");
               body.style.background = "white;";
 
               console.log("room # in loginContainer: ", appState.roomNumber);

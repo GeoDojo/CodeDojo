@@ -11,15 +11,16 @@ const io = require('socket.io')(server);
 
 const PORT = 3000;
 
-// require the routes
-const gameRouter = require('./routes/gameRouter');
+// // require the routes
+const algoHelper = require('./algoHelper');
+const { testUserFxn } = require('./controllers/algoController');
 const userRouter = require('./routes/userRouter');
 
 app.use(express.json());
 app.use(cookieParser());
 
-app.use('/game', gameRouter);
-app.use('/user', userRouter);
+// app.use('/game', gameRouter);
+// app.use('/user', userRouter);
 
 // handles static files for dev server
 app.use('/dist', express.static(path.resolve(__dirname, '../dist')));
@@ -59,40 +60,23 @@ io.on('connection', (socket) => {
   //this is when a user lands on our site
   //console.log('a user connected: ', socket.id)
 
-  socket.on('test', (arg) => {
-    console.log(arg)
-  })
-
   socket.on('joinRoom', (room) => {
     socket.join(room);
     console.log(`user ${socket.id} joined room: `, room)
-    io.sockets.emit("addUser", ["heidi", socket.id]) //key value pair
+    io.sockets.emit("addUser", [socket.id, 'heidi']) //key value pair
   })
 
-  socket.on("getAlgo", (payload) => {
-    console.log('payload: ', payload)
+  socket.on('getAlgo', async (payload) => {
+    const finalResObj = await algoHelper(payload);
 
-    // eventually the real middleware
-
-    const resBody = {
-      algoName: 'Add Two',
-      algoPrompt: 'take a num and add 2',
-      algoStart: `function addTwo(num){
-        //enter your code here...
-      };`,
-      test_cases: [[1, 3], [2, 4]],
-      completedAlgos: {
-        2: true,
-      },
-      totalRows: 4
-    };
-
-    // io.in(payload.roomNumber).emit("sendAlgo", resBody);
-    io.sockets.emit('sendAlgo', resBody);
-
-    //sending message to user, wecloming to chat room
-    //socket.emit('newAlgo', `Welcome to ${room}`);
+    io.sockets.emit('sendAlgo', finalResObj);
   });
+
+  socket.on('submitAlgo', async (payload) => {
+
+    const finalResObj = testUserFxn(payload, socket.id);
+    io.sockets.emit('results', finalResObj);
+  })
 
   //Each socket also fires a special disconnect event:
   socket.on('disconnect', () => {
@@ -100,5 +84,4 @@ io.on('connection', (socket) => {
   })
 })
 
-//module.exports = app;
 module.exports = server;
