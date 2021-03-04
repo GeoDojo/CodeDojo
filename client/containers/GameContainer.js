@@ -14,7 +14,6 @@ const GameContainer = () => {
     totalRows: appState.totalRows,
     roomNumber: appState.roomNumber,
   };
-  console.log(appState.currentPlayers)
 
   return (
     <div className='panel'>
