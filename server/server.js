@@ -51,18 +51,14 @@ app.use((err, req, res, next) => {
 
 
 server.listen(PORT, () => {
-  //app.listen(PORT, () => {
   console.log(`Server is listening to 🚀 ${PORT}... 🚀`);
 });
 
 
 io.on('connection', (socket) => {
-  //this is when a user lands on our site
-  //console.log('a user connected: ', socket.id)
 
   socket.on('joinRoom', (room) => {
     socket.join(room);
-    console.log(`user ${socket.id} joined room: `, room)
     io.sockets.emit("addUser", [socket.id, 'heidi']) //key value pair
   })
 
