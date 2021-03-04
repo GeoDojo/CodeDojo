@@ -57,7 +57,7 @@ server.listen(PORT, () => {
 
 io.on('connection', (socket) => {
   //this is when a user lands on our site
-  console.log('a user connected: ', socket.id)
+  //console.log('a user connected: ', socket.id)
 
   socket.on('test', (arg) => {
     console.log(arg)
@@ -65,7 +65,7 @@ io.on('connection', (socket) => {
 
   socket.on('joinRoom', (room) => {
     socket.join(room);
-    console.log('user joined room: ', room)
+    console.log(`user ${socket.id} joined room: `, room)
   })
 
   socket.on("getAlgo", (payload) => {
@@ -86,10 +86,11 @@ io.on('connection', (socket) => {
       totalRows: 4
     };
 
-    io.in(payload.roomNumber).emit("sendAlgo", resBody);
+    // io.in(payload.roomNumber).emit("sendAlgo", resBody);
+    io.sockets.emit('sendAlgo', resBody);
 
     //sending message to user, wecloming to chat room
-    socket.emit('newAlgo', `Welcome to ${room}`);
+    //socket.emit('newAlgo', `Welcome to ${room}`);
   });
 
   //Each socket also fires a special disconnect event:

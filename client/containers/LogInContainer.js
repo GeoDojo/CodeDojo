@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import LoginButton from '../components/Button';
 import { io } from 'socket.io-client';
 const socket = io()
@@ -19,30 +20,33 @@ const LogInContainer = () => {
 
   return (
     <div className='login-container'>
-      {/* Reusing the Button.js component and passing genericClick to  */}
-      <LoginButton
-        id='GoogleBtn'
-        siteName={'Google'}
-        genericClick={'googleLogin'}
-      />
-      <LoginButton
-        id='FacebookBtn'
-        siteName={'Facebook'}
-        genericClick={'FACEBOOK Login'}
-      />
-      <LoginButton
-        id='GithubBtn'
-        siteName={'GitHub'}
-        genericClick={'GITHUB Login'}
-      />
-      <LoginButton
-        id='AnonymousBtn'
-        siteName={'Anonymous'}
-        genericClick={() => {
-          console.log('room # in loginContainer: ', appState.roomNumber)
-          socket.emit('joinRoom', appState.roomNumber)
-        }}
-      />
+      <Link to='/game'>
+        {/* Reusing the Button.js component and passing genericClick to  */}
+        <LoginButton
+          id='GoogleBtn'
+          siteName={'Google'}
+          genericClick={'googleLogin'}
+        />
+        <LoginButton
+          id='FacebookBtn'
+          siteName={'Facebook'}
+          genericClick={'FACEBOOK Login'}
+        />
+        <LoginButton
+          id='GithubBtn'
+          siteName={'GitHub'}
+          genericClick={'GITHUB Login'}
+        />
+      
+        <LoginButton
+          id='AnonymousBtn'
+          siteName={'Anonymous'}
+          genericClick={() => {
+            console.log('room # in loginContainer: ', appState.roomNumber)
+            socket.emit('joinRoom', appState.roomNumber)
+          }}
+        />
+      </Link> 
     </div>
   );
 };

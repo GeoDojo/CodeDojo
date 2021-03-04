@@ -23,11 +23,11 @@ const WaitingRoomContainer = () => {
     return (//wrap this into link
         <div>
         <Link to='/game'>
-            <StartButton 
+            {/* <StartButton 
                 genericClick={() => {
                     socket.emit('getAlgo', getAlgoPayload);
                 }}
-                siteName = {"Start"} id="StartBtnWaitingRoom"/>
+                siteName = {"Start"} id="StartBtnWaitingRoom"/> */}
 
             
         </Link>
