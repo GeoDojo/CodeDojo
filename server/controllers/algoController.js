@@ -8,24 +8,28 @@ const pool = new Pool({
 
 const algoController = {};
 
-algoController.getTotalRows = (payload) => {
+async function getTotalRows(payload){
   // if it's a new game
+  
   if (!payload.totalRows) {
     // grabbing total # of rows in the DB table
     const query = 'SELECT COUNT(*) FROM algorithms';
-    pool
-      .query(query)
+    
+    // result -> obj or the error message
+    const result = await pool.query(query)
       .then((data) => {
         return { 
-          totalRows: Number(data.rows[0].count),
-          completedAlgos: payload.completedAlgos,
-          roomNumber: payload.roomNumber, 
-        };
-      
-      })
-      .catch((e) => {
-        console.log(`Error in algoController.getTotalRows - unable to retrieve total rows in database: ${e}`);
-        });
+            totalRows: Number(data.rows[0].count),
+            completedAlgos: payload.completedAlgos,
+            roomNumber: payload.roomNumber, 
+          };
+        
+        })
+        .catch((e) => {
+          console.log(`Error in algoController.getTotalRows - unable to retrieve total rows in database: ${e}`);
+          });
+        
+     return result;
   } else {
     return {
       totalRows: payload.totalRows,
@@ -35,41 +39,43 @@ algoController.getTotalRows = (payload) => {
   }
 };
 
-algoController.getAlgo = (resObj) => {
+async function getAlgo(payload) {
   // generate a random algo ID, confirm if we have not called it
-  const { completedAlgos, totalRows } = resObj;
+  const { completedAlgos, totalRows } = payload;
 
-  let newAlgoID = Math.floor(Math.random() * totalRows);
+  let newAlgoID = Math.ceil(Math.random() * totalRows);
 
   while (completedAlgos[newAlgoID]) {
-    newAlgoID = Math.floor(Math.random() * totalRows);
+    newAlgoID = Math.ceil(Math.random() * totalRows);
   }
 
   // add the new algo ID to our completedAlgos cache to keep track of all the sent algos
   completedAlgos[newAlgoID] = true;
-  
+
   // retrieve a new algo from DB
   const query = `SELECT * FROM algorithms WHERE algo_id = ${newAlgoID}`;
-  pool
-    .query(query)
+  console.log('query: ', query);
+
+  // result -> 2 values: object or error
+  const newAlgoObj = await pool.query(query)
     .then((data) => {
-      const returnObj = data.rows[0];
-
-
-
+      const dataObj = data.rows[0];
       return {
-        algoID: returnObj.algo_id,
-        algoName: returnObj.algo_name,
-        algoPrompt: returnObj.algo_prompt,
-        test_cases: returnObj.test_cases,
-        algoStart: `function(${returnObj.function_name}(${returnObj.parameters}){
+        algoID: dataObj.algo_id,
+        algoName: dataObj.algo_name,
+        algoPrompt: dataObj.algo_prompt,
+        test_cases: dataObj.test_cases,
+        algoStart: `function(${dataObj.function_name}(${dataObj.parameters}){
           // write your code here. Good luck :P
         })`
       };
     })
     .catch((e) => {
-      console.log(`Error in algoController.getAlgos - unable to retrieve an algo from database: ${e}`)
+      console.log(`Error in getAlgos - unable to retrieve an algo from database: ${e}`)
       });
+
+  const finalResObj = Object.assign(payload, newAlgoObj);    
+  return finalResObj;
 };
 
 // algoController.generateAlgoStart = (req, res, next) => {
@@ -116,4 +122,7 @@ algoController.testFunction = (req, res, next) => {
   return next();
 };
 
-module.exports = algoController;
+module.exports = {
+  getTotalRows,
+  getAlgo
+};

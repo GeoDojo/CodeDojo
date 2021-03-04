@@ -12,8 +12,8 @@ const io = require('socket.io')(server);
 const PORT = 3000;
 
 // // require the routes
-const algoController = require('./controllers/algoController');
-// const userRouter = require('./routes/userRouter');
+const algoHelper = require('./algoHelper');
+const userRouter = require('./routes/userRouter');
 
 app.use(express.json());
 app.use(cookieParser());
@@ -66,16 +66,18 @@ io.on('connection', (socket) => {
   })
 
   socket.on("getAlgo", async (payload) => {
-    let resObj = {}
 
-    console.log('payload: ', payload)
+    console.log('payload from socket: ', payload)
 
-    console.log(resObj = await Object.assign(resObj, algoController.getTotalRows(payload)));
-    //resObj = Object.assign(resObj, algoController.getAlgo(resObj));
-    //console.log('getAlgo: ', algoController.get)
+    const finalresObj = await algoHelper(payload);
+    console.log('after algoHelper in server.js: ', finalresObj);
+
+    // console.log(resObj = await Object.assign(resObj, algoController.getTotalRows(payload)));
+    // //resObj = Object.assign(resObj, algoController.getAlgo(resObj));
+    // //console.log('getAlgo: ', algoController.get)
     
 
-    io.sockets.emit('sendAlgo', resObj);
+    io.sockets.emit('sendAlgo', finalresObj);
 
   });
 
