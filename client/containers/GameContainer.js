@@ -5,29 +5,24 @@ import SubmitButton from '../components/Button';
 import StartButton from '../components/Button'
 //import TotalRowsButton from '../components/Button';
 import { AppContext } from '../state/context';
-
 import { io } from 'socket.io-client';
 const socket = io()
-
 const GameContainer = () => {
-
   const { appState, appDispatch } = useContext(AppContext);
-
   const getAlgoPayload = {
     completedAlgos: appState.completedAlgos,
     totalRows: appState.totalRows,
     roomNumber: appState.roomNumber,
   };
+  console.log(appState.currentPlayers)
 
   return (
     <div className='panel'>
-      {/* {<PromptCodeBox/>} */}
       <StartButton 
                 genericClick={() => {
                     socket.emit('getAlgo', getAlgoPayload);
                 }}
                 siteName = {"Start"} id="StartBtnWaitingRoom"/>
-
       <div className='prompContainer'>
         <h1>{appState.algoName}</h1>
         <p>{appState.prompt}</p>
@@ -60,14 +55,9 @@ const GameContainer = () => {
     </div>
   );
 };
-
 export default GameContainer;
-
-
-                
             // eval("(var fn = function(s){ return s })");
             // console.log(fn("s"));
-
             //grab the user input from codeMirror, add paratheses in the begining and end of the string
             //declare a variable (evalfn) to store the = eval(new userInput string)
             //send it back to back end in request body {userFxn = evalfn}
@@ -76,10 +66,6 @@ export default GameContainer;
             //         return num + 2;
             //     })`)
             // console.log(userFn(2))
-
-
-
-
 /*
     genericClick = { () => {
         fetch(`/game/start`, {
@@ -99,17 +85,14 @@ export default GameContainer;
                     type: 'UPDATE_PROMPT',
                     payload: data.algoPrompt
                 })
-
                 appDispatch({
                     type: 'UPDATE_FUNCTION',
                     payload: data.algoStart 
                 })  
-
                 appDispatch({
                         type: 'UPDATE_SUBMISSIONTESTSTATUS',
                         payload: data.endGame
                     })
-
                 appDispatch({
                     type: 'UPDATE_TOTALROWS',
                     payload: { totalRows: data.totalRows, }

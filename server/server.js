@@ -62,6 +62,7 @@ io.on('connection', (socket) => {
   socket.on('joinRoom', (room) => {
     socket.join(room);
     console.log(`user ${socket.id} joined room: `, room)
+    io.sockets.emit("addUser", ["heidi", socket.id]) //key value pair
   })
 
   socket.on("getAlgo", async (payload) => {

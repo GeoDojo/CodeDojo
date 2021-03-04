@@ -95,6 +95,12 @@ export const appReducer = (state, action) => {
     ...state,
     algoName: action.payload,
   };
+  }
+  switch (action.type) {
+    case 'ADD_USER':
+    const newState = {...state}
+    newState.currentPlayers[action.payload[0]] = action.payload[1]
+    return newState;
 }
 }
 
