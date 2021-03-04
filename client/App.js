@@ -1,45 +1,111 @@
 import React, { useContext, createContext, useEffect, useReducer, Provider } from 'react';
 import { io } from 'socket.io-client';
+const socket = io();
+import { Switch, Route } from 'react-router-dom';
+
+// react router components
 import LoginContainer from './containers/LoginContainer';
 import WaitingRoomContainer from './containers/WaitingRoomContainer';
 import GameContainer from './containers/GameContainer';
-const socket = io();
 
 
 import { AppContext } from './state/context';
 import { initialAppState, appReducer} from './state/reducers';
 
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 const App = () => {
+
+  const [appState, appDispatch] = useReducer(appReducer, initialAppState); 
+
   const checkSocket = () => {
     socket.emit('test', `This is the first socket test from ${socket.id}`);
   };
 
-  const [ appState, appDispatch] = useReducer(appReducer, initialAppState);
+  let updateState = {};
+  
+
+   useEffect(()=> {
+
+      console.log('before dispatchers launch: ', updateState)
+
+      if (updateState.algoName !== appState.algoName){
+        appDispatch({
+          type: 'UPDATE_PROMPT',
+          payload: updateState.algoPrompt
+        })
+
+        appDispatch({
+            type: 'UPDATE_FUNCTION',
+            payload: updateState.algoStart 
+        })  
+
+       appDispatch({
+              type: 'UPDATE_COMPLETEDALGOS',
+              payload: updateState.completedAlgos
+          })
+
+        appDispatch({
+            type: 'UPDATE_TOTALROWS',
+            payload: updateState.totalRows
+        })
+
+        appDispatch({
+            type: 'STORE_TEST_CASES',
+            payload: updateState.test_cases,
+        })
+
+        appDispatch({
+          type: 'UPDATE_ALGONAME',
+          payload: updateState.algoName,
+        })
+      }
+    }, [updateState])
+
+  socket.on('sendAlgo', (resBody) => {
+    console.log('got back from server resbody: ', resBody)
+      
+    updateState = Object.assign({}, resBody);
+  })
 
   return (
-
     <AppContext.Provider 
       value={{
-          appState, 
+        appState, 
         appDispatch
     }}>
-
-    {/* // <div>
-    //     <button onClick={checkSocket}>click</button>
-    // </div> */}
-
-    <Router>
+      
       <Switch>
         <Route path='/waitingroom' component={WaitingRoomContainer} />
         <Route exact path='/game' component={GameContainer} />
         <Route exact path='/' component={LoginContainer} />
       </Switch>
-    </Router>
 
     </AppContext.Provider>
-  );
+    );
 };
 
 export default App;
+
+
+/*
+    <AppContext.Provider 
+      value={{
+        appState, 
+        appDispatch
+    }}>
+
+    { // <div>
+    //     <button onClick={checkSocket}>click</button>
+    // </div> }
+
+    <Switch>
+    <Route path='/waitingroom' component={WaitingRoomContainer} />
+    <Route exact path='/game' component={GameContainer} />
+    <Route exact path='/' component={LoginContainer} />
+  </Switch>
+
+</AppContext.Provider>
+
+
+
+*/

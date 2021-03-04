@@ -1,3 +1,4 @@
+
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
@@ -15,16 +16,7 @@ const gameRouter = require('./routes/gameRouter');
 const userRouter = require('./routes/userRouter');
 
 app.use(express.json());
-//app.use(cookieParser());
-
-
-// route handlers
-// app.get('/game/start', (req, res) => {
-//   console.log('hi im here');
-//   return res.status(200).send({
-//     message: 'hi'
-//   })
-// })
+app.use(cookieParser());
 
 app.use('/game', gameRouter);
 app.use('/user', userRouter);
@@ -71,9 +63,38 @@ io.on('connection', (socket) => {
     console.log(arg)
   })
 
+  socket.on('joinRoom', (room) => {
+    socket.join(room);
+    console.log('user joined room: ', room)
+  })
+
+  socket.on("getAlgo", (payload) => {
+    console.log('payload: ', payload)
+
+    // eventually the real middleware
+
+    const resBody = {
+      algoName: 'Add Two',
+      algoPrompt: 'take a num and add 2',
+      algoStart: `function addTwo(num){
+        //enter your code here...
+      };`,
+      test_cases: [[1, 3], [2, 4]],
+      completedAlgos: {
+        2: true,
+      },
+      totalRows: 4
+    };
+
+    io.in(payload.roomNumber).emit("sendAlgo", resBody);
+
+    //sending message to user, wecloming to chat room
+    socket.emit('newAlgo', `Welcome to ${room}`);
+  });
+
   //Each socket also fires a special disconnect event:
   socket.on('disconnect', () => {
-    console.log('a user disconnect');
+    console.log('a user disconnect', socket.id);
   })
 })
 

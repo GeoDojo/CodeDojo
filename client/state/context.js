@@ -1,18 +1,19 @@
-import React, { createContext, useContext } from 'react';
+import React, { createContext, useReducer } from 'react';
+
+//import { initialAppState, appReducer} from './reducers';
 
 //createcontext initialize empty object
-export const AppContext = createContext(); //{}
+export const AppContext = createContext();
 
+//const [appState, appDispatch] = useReducer(appReducer, initialAppState);
 
-
-
-// // const PromptContext = createContext();
-// // const QuestionContext = createContext();
-// // const ConsoleContext = createContext();
-// // const CompletedAlgosContext = createContext();//so users can solve different algo each time
-// // const test_casesContext = createContext();
-// // const totalRowsContext = createContext(); 
-// // const startGameContext = createContext();
-// // const endGameContext = createContext();
-// // const WinnerContext = createContext();
-// // const HostContext = createContext();
+// export const AppContextProvider = (children) => {
+//   return(
+//     <AppContext.Provider value ={{
+//       appState,
+//       appDispatch
+//     }}>
+//       {children}
+//     </AppContext.Provider>
+//   )
+// }
