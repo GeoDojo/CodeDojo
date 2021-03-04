@@ -11,9 +11,7 @@ import './styles/index.scss';
 
 render(
   <BrowserRouter>
-    {/* {<AppContextProvider> } */}
       <App />
-  {/* {  </AppContextProvider>} */}
   </BrowserRouter>,
   document.getElementById('root')
 );
