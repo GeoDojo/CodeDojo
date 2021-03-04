@@ -29,24 +29,27 @@ const LogInContainer = () => {
           {/* Reusing the Button.js component and passing genericClick to  */}
           <LoginButton
             id="GoogleBtn"
-            siteName={"Google"}
+            siteName={"Sign in with Google"}
             genericClick={"googleLogin"}
           />
           <LoginButton
             id="FacebookBtn"
-            siteName={"Facebook"}
+            siteName={"Sign in with Facebook"}
             genericClick={"FACEBOOK Login"}
           />
           <LoginButton
             id="GithubBtn"
-            siteName={"GitHub"}
+            siteName={"Sign in with GitHub"}
             genericClick={"GITHUB Login"}
           />
 
           <LoginButton
             id="AnonymousBtn"
-            siteName={"Anonymous"}
+            siteName={"Play Anonymously"}
             genericClick={() => {
+              const body = document.querySelect("body");
+              body.style.background = "white;";
+
               console.log("room # in loginContainer: ", appState.roomNumber);
               socket.emit("joinRoom", appState.roomNumber);
             }}

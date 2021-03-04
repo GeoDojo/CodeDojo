@@ -1,15 +1,12 @@
 @import "./banner.scss";
 
-body {
-  background: ghostwhite;
-}
-
 a:-webkit-any-link {
   text-decoration: none;
 }
 
-html {
-  background: #55efc4;
+body {
+  background: black; //whole page background color
+  height: 100vh;
 }
 
 .generic-button {
@@ -64,18 +61,24 @@ html {
 }
 
 #GithubBtn {
-  background: #4078c0;
+  background: #121213;
   color: white;
   font-weight: bold;
   border-radius: 5px;
 }
 
 #AnonymousBtn {
-  border: 2px solid rgb(2, 2, 2);
+  background: #3c9eb6;
+  color: white;
+  font-weight: bold;
+  border-radius: 5px;
 }
 
 #StartBtnWaitingRoom {
-  border: 10px solid rgb(19, 18, 17);
+  background: #2c515a;
+  color: white;
+  font-weight: bold;
+  border-radius: 5px;
 }
 
 .codebox-title {
@@ -117,7 +120,7 @@ html {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #55efc4;
+  background-color: black; //#55efc4 whole page background color
 }
 
 .login-container {
