@@ -13,7 +13,7 @@ const socket = io();
 
 export default function AlertDialog() {
   const [open, setOpen] = React.useState(false);
-  const { appState, appDispatch } = useContext(AppContext);
+  const { appState } = useContext(AppContext);
 
   const HandleClickOpen = () => {
     setOpen(true);
@@ -40,6 +40,14 @@ const LeaveGameHandleClick = () => {
 // create array of retry if user fail
 // endGame status from backend
 
+let displayText;
+
+if (appState.endRound){
+  displayText = "Hooray! Great work on the Algo! Let's try another one!"
+} else {
+  displayText = 'Oops! Sorry, try again'
+}
+
 return (
   <div>
     <Button variant="outlined" color="primary" onClick={() => {
@@ -62,10 +70,10 @@ return (
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-      <DialogTitle id="alert-dialog-title">{"Code Dojo"}</DialogTitle>
+      <DialogTitle id="alert-dialog-title">{"Results"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            "Hooray! Great work on the Algo! Let's try another one!"
+            {displayText}
           </DialogContentText>
         </DialogContent>
         <DialogActions>

@@ -102,7 +102,7 @@ function testUserFxn(req, socketID) {
     endGameObj.winner = socketID;
   }
 
-  endGameObj.endGame = pass;
+  endGameObj.endRound = pass;
   return endGameObj;
 };
 
