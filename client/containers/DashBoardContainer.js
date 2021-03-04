@@ -19,7 +19,7 @@ const DashBoardContainer = () => {
       <Link to="/game">
         <ReplayButton
           genericClick={() => {}}
-          siteName={"Replay"}
+          siteName={"REPLAY"}
           id="ReplayBtnWaitingRoom"
         />
       </Link>
@@ -27,16 +27,16 @@ const DashBoardContainer = () => {
       <Link to="/">
         <ExitGameButton
           genericClick={() => {}}
-          siteName={"Exit"}
+          siteName={"EXIT"}
           id="ExitBtnWaitingRoom"
         />
       </Link>
       <div className="WinnerContainer">
-        <h1>Winner:</h1>
+        <h1>WINNER:</h1>
         <ImageAvatars />
       </div>
       <div className="AllPlayersContainer">
-        <h1>Losers:</h1>
+        <h1>LOSERS:</h1>
         <AllPlayersAvatar />
       </div>
     </div>
