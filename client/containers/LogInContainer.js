@@ -1,10 +1,10 @@
-import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
-import LoginButton from '../components/Button';
-import { io } from 'socket.io-client';
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
+import LoginButton from "../components/Button";
+import { io } from "socket.io-client";
 const socket = io();
 
-import { AppContext } from '../state/context';
+import { AppContext } from "../state/context";
 
 const LogInContainer = () => {
   const { appState } = useContext(AppContext);
@@ -18,36 +18,37 @@ const LogInContainer = () => {
   //to-dos: reRoute to waitingRoom (this might be in the App.js)
 
   return (
-    <div className='login-container'>
-      <div className='banner-container'>
-        <div className=''>CODE</div>
-        <div className=''>DOJO</div>
-      </div>
-      <div className='login-container'>
-        <Link to='/game'>
+    // <div className="login-page-container">
+    <div className="login-bar">
+      <div className="login-container">
+        <div className="banner-container">
+          <div className="titleText">CODE</div>
+          <div className="titleText">DOJO</div>
+        </div>
+        <Link to="/game">
           {/* Reusing the Button.js component and passing genericClick to  */}
           <LoginButton
-            id='GoogleBtn'
-            siteName={'Google'}
-            genericClick={'googleLogin'}
+            id="GoogleBtn"
+            siteName={"Google"}
+            genericClick={"googleLogin"}
           />
           <LoginButton
-            id='FacebookBtn'
-            siteName={'Facebook'}
-            genericClick={'FACEBOOK Login'}
+            id="FacebookBtn"
+            siteName={"Facebook"}
+            genericClick={"FACEBOOK Login"}
           />
           <LoginButton
-            id='GithubBtn'
-            siteName={'GitHub'}
-            genericClick={'GITHUB Login'}
+            id="GithubBtn"
+            siteName={"GitHub"}
+            genericClick={"GITHUB Login"}
           />
 
           <LoginButton
-            id='AnonymousBtn'
-            siteName={'Anonymous'}
+            id="AnonymousBtn"
+            siteName={"Anonymous"}
             genericClick={() => {
-              console.log('room # in loginContainer: ', appState.roomNumber);
-              socket.emit('joinRoom', appState.roomNumber);
+              console.log("room # in loginContainer: ", appState.roomNumber);
+              socket.emit("joinRoom", appState.roomNumber);
             }}
           />
         </Link>
