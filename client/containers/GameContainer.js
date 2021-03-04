@@ -1,9 +1,9 @@
 import React, { useContext, createContext, useEffect, useReducer, Provider } from 'react';
 import CodeBox from '../components/codeBox';
-//import PromptCodeBox from '../components/PromptCodeBox';
 import SubmitButton from '../components/Button';
-import StartButton from '../components/Button'
-//import TotalRowsButton from '../components/Button';
+import StartButton from '../components/Button';
+import Dialog from '../components/Dialog';
+import ImageAvartar from '../components/ImageAvartar';
 import { AppContext } from '../state/context';
 import { io } from 'socket.io-client';
 const socket = io()
@@ -18,6 +18,7 @@ const GameContainer = () => {
 
   return (
     <div className='panel'>
+      <ImageAvartar />
       <StartButton 
                 genericClick={() => {
                     socket.emit('getAlgo', getAlgoPayload);
@@ -27,9 +28,10 @@ const GameContainer = () => {
         <h1>{appState.algoName}</h1>
         <p>{appState.prompt}</p>
       </div>
-      <CodeBox codeBoxName={'Function'} codeBoxValue={appState.function}/>
-      <CodeBox codeBoxName={'Submission Result'} codeBoxValue={appState.submissionTestStatus}/> 
+      <CodeBox codeBoxName={'Your Input'} codeBoxValue={appState.function}/>
+      {/* <CodeBox codeBoxName={'Submission Result'} codeBoxValue={appState.submissionTestStatus}/>  */}
       {/* <p>{appState.totalRows}</p> */}
+      
       <SubmitButton
         genericClick = { () => {
             // fetch(`/game/submit`, {
@@ -52,6 +54,7 @@ const GameContainer = () => {
         id='SubmitBtnGameContainer'
         // genericClick={'submit'}
       />
+      <Dialog />
     </div>
   );
 };
