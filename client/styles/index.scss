@@ -83,8 +83,19 @@ body {
   border-radius: 5px;
 }
 
-#StartBtnWaitingRoom {
-  
+
+#ReplayBtnWaitingRoom {
+  background: #2c515a;
+  color: white;
+  font-weight: bold;
+  border-radius: 5px;
+}
+
+#ExitBtnWaitingRoom {
+  background: #2c515a;
+  color: white;
+  font-weight: bold;
+  border-radius: 5px;
 }
 
 
@@ -162,5 +173,23 @@ body {
 }
 
 .dashboard{
-  //color: white;
+  margin-top: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.AllPlayersContainer{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.WinnerContainer{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
